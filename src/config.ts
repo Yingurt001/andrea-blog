@@ -26,7 +26,7 @@ const SITE_TIMEZONE = 0; //设置你的网站时区 from -12 to 12 default in UT
 export const siteConfig: SiteConfig = {
 	title: "Andrea's Blog",
 	subtitle: "记录生活与研究的小角落",
-	siteURL: "https://andrea-blog.vercel.app/", // 请替换为你的站点URL，以斜杠结尾
+	siteURL: "https://andrea-blog-gilt.vercel.app/", // 请替换为你的站点URL，以斜杠结尾
 	siteStartDate: "2026-03-30", // 站点开始运行日期，用于站点统计组件计算运行天数
 
 	timeZone: SITE_TIMEZONE,
