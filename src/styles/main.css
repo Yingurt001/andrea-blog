@@ -725,3 +725,23 @@ html {
 :root:not(.dark) .custom-md spoiler {
   --_spoiler-mask: color-mix(in oklch, var(--primary) 55%, white 45%);
 }
+
+/* Hide ClustrMaps widget - invisible visitor tracking */
+#clstr_globe,
+#clstr_globe *,
+[id*="clstr"],
+[class*="clstr"],
+iframe[src*="clustrmaps"],
+iframe[src*="clustr"],
+div[id*="clustr"],
+div[class*="clustr"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
