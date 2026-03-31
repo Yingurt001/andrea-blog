@@ -3,47 +3,32 @@ This website is built with the **Astro** framework using the [Mizuki](https://gi
 
 ::github{repo="matsuzaka-yuki/Mizuki"}
 
-## 🌟 Theme Features
+## 致谢
 
-### 🎨 Design & User Experience
-- **Modern & Elegant Design** - Clean, minimalist interface with beautiful typography
-- **Fully Responsive** - Optimized for all devices from mobile to desktop
-- **Dark/Light Mode** - Automatic theme switching with smooth transitions
-- **Beautiful Typography** - Enhanced readability with JetBrains Mono font
-- **Smooth Animations** - Fluid page transitions and interactive elements
+感谢 [Mizuki](https://github.com/matsuzaka-yuki/Mizuki) 的作者，让我这个不太懂前端的人也能拥有一个好看的博客。感谢开源社区里每一个默默贡献的人，你们让这个世界变得更温柔了一点。
 
-### 🔍 Content & Search
-- **Advanced Search** - Powered by [Pagefind](https://pagefind.app/) for fast, accurate results
-- **Enhanced Markdown** - Extended syntax with code highlighting and math support
-- **Interactive Table of Contents** - Auto-scroll navigation for long articles
-- **RSS Feed Generation** - Stay updated with automatic feed generation
-- **Reading Time Estimation** - Know how long articles take to read
-- **Post Categorization** - Organize content with tags and categories
-
-
-
-### 📱 Special Pages
-- **Anime Tracking Page** - Track your anime watching progress with ratings
-- **Friends Links Page** - Showcase friend websites with beautiful cards
-- **Diary/Moments Page** - Share life moments like social media posts
-- **Archive Page** - Organized timeline view of all posts
-- **About Page** - Customizable personal introduction (this page!)
-
-### 🛠 Technical Features
-- **Enhanced Code Blocks** - Powered by [Expressive Code](https://expressive-code.com/)
-- **Math Support** - LaTeX rendering with KaTeX for mathematical expressions
-- **Image Optimization** - PhotoSwipe gallery with lazy loading
-- **SEO Optimized** - Built-in sitemap and meta tags for better search visibility
-- **Performance Optimized** - Fast loading with caching and optimization
-- **Comment System Ready** - Integration support for Twikoo comments
-
-### 🎯 Advanced Markdown Features
-- **Callouts & Admonitions** - Beautiful info boxes with `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`
-- **Mathematical Equations** - Write LaTeX math with `$inline$` and `$$block$$` syntax
-- **GitHub Cards** - Embed repository cards with `::github{repo="user/repo"}`
-- **Syntax Highlighting** - Advanced code highlighting with line numbers
-- **Copy Code Buttons** - Easy code copying functionality
+也感谢你，点进这个页面的陌生人。
 
 ---
 
-*Built with ❤️ using Astro and inspired by modern web design principles.*
+## 关于我
+
+我叫 Ying，朋友们叫我 Andrea。
+
+现在在诺丁汉念统计，大部分时间和数字打交道——概率、模型、损失函数，偶尔也和自己打交道。研究的方向听起来有点冷门：双曲空间上的神经网络、Simulation-Based Inference、信用风险里的机器学习。说白了就是试图让机器在弯曲的世界里也能学会思考。
+
+但如果只有这些，生活未免太单薄了。
+
+我喜欢摄影，喜欢在街头捕捉那些一闪而过的光影。中学的时候组过乐队，弹吉他，翻唱 Avril Lavigne，舞台上的感觉至今记得。后来开始学架子鼓，虽然总是找不到时间练——科研和鼓点很难同时打拍子。
+
+闲下来的时候会在 Procreate 上画画，用 Premiere 剪剪视频，在 Minecraft 里盖一些现实中盖不了的房子。练过两年 Krav Maga，也折腾过 STM32 面包板和 Unity 游戏引擎。偶尔翻翻塔罗牌，不是为了占卜，只是觉得那些图案和隐喻很美。
+
+六岁跳过一级，十二三岁写了人生第一个程序——一个二次方程求解器，用的是一种现在已经记不清名字的伪代码语言。从那以后就一直在写，写代码，写论文，写日记，写那些说不出口的话。
+
+搭这个博客是因为想给自己找一个角落。社交媒体太吵了，朋友圈太短了，论文太正式了。我需要一个地方，可以认真地、慢慢地、不被打断地说话。
+
+所以这里会有研究笔记，也会有半夜的胡思乱想；会有技术分享，也会有旅途中随手拍下的照片。不保证更新频率，不保证篇篇精彩，只保证每一个字都是真的。
+
+如果你恰好路过，欢迎坐坐。
+
+> Stay curious, stay kind.
