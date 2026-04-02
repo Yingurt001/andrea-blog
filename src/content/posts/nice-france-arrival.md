@@ -1,5 +1,5 @@
 ---
-title: "Bonjour, Nice!"
+title: Bonjour, Nice!
 published: 2026-04-01
 description: 第一次来法国，落地尼斯，蔚蓝海岸的第一眼。
 tags:
@@ -9,7 +9,7 @@ tags:
   - 摄影
   - 生活
 category: 生活
-draft: true
+draft: false
 ---
 
 # 初到尼斯
