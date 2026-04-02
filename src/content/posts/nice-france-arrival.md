@@ -16,7 +16,7 @@ draft: false
 
 2026 年 4 月 1 日，我来到了法国尼斯。
 
-从英国飞过来，落地的那一刻，空气里就是不一样的味道——干燥、温暖，带着一点点咸味。机场出来，环岛上一座巨大的雕塑在蓝天下伫立，仿佛是这座城市对所有初来者的问候。
+落地尼斯,映入眼帘的是蔚蓝的大海，环岛上一座巨大的雕塑在蓝天下伫立，仿佛是这座城市对所有初来者的问候。
 
 <img src="/images/nice-france/DSCF0443.webp" alt="机场附近的雕塑，尼斯的第一眼" loading="lazy" />
 
@@ -67,8 +67,6 @@ draft: false
 <img src="/images/nice-france/DSCF0582.webp" alt="鹅卵石海滩上的人们" loading="lazy" />
 
 有人在石滩上野餐，有人在海里游泳——四月的地中海，他们是认真的。
-
-<img src="/images/nice-france/DSCF0612.webp" alt="海边的家庭，有人在游泳" loading="lazy" />
 
 也有人选了一片沙滩，躺下来，什么都不做。
 
