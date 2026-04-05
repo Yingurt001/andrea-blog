@@ -5,7 +5,7 @@ export const timelineData: TimelineItem[] = [
 		id: "klein-hnn-research",
 		title: "Klein Manifold Neural Networks — MHUG Lab",
 		description:
-			"在 MHUG 实验室 Ziheng Chen 博士指导下，研究双曲神经网络在 Klein 流形上的构建。提出 Internal Lorentz Neural Network (ILNN)，实现完全内部的双曲架构，所有计算均在洛伦兹模型内完成，在双曲模型中达到 SOTA 性能。",
+			"在 MHUG 实验室 Ziheng Chen 博士指导下，研究双曲神经网络。负责在 Klein 流形上完善各神经网络组件（全连接层、MLR 分类头等），并与 Poincaré、Lorentz 等其他流形上的实现进行系统对比实验。",
 		type: "project",
 		startDate: "2026-02-07",
 		endDate: "2026-05-31",
@@ -19,8 +19,8 @@ export const timelineData: TimelineItem[] = [
 			"Lorentz Model",
 		],
 		achievements: [
-			"搭建 Klein 流形上的神经网络并对标其他流形",
-			"提出 ILNN 全内部双曲架构",
+			"完善 Klein 流形上的神经网络组件（FC、MLR 等）",
+			"多流形对比实验（Klein vs Poincaré vs Lorentz）",
 			"预期顶会论文产出",
 		],
 		links: [
