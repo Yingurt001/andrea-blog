@@ -32,6 +32,26 @@
 
 	let groups: Group[] = [];
 
+	// 分类色标配置：hue 值对应 oklch 色彩空间
+	const categoryColors: Record<string, { hue: number; label: string }> = {
+		"技术": { hue: 145, label: "技术" },   // 绿色
+		"生活": { hue: 45, label: "生活" },     // 橙色
+		"研究": { hue: 260, label: "研究" },    // 紫色
+		"科研": { hue: 220, label: "科研" },    // 蓝色
+	};
+
+	function getCategoryStyle(category?: string) {
+		if (!category || !categoryColors[category]) {
+			return { bg: "oklch(0.9 0.03 0)", text: "oklch(0.45 0.03 0)", label: "未分类" };
+		}
+		const { hue, label } = categoryColors[category];
+		return {
+			bg: `oklch(0.92 0.04 ${hue})`,
+			text: `oklch(0.45 0.1 ${hue})`,
+			label,
+		};
+	}
+
 	function formatDate(date: Date) {
 		const month = (date.getMonth() + 1).toString().padStart(2, "0");
 		const day = date.getDate().toString().padStart(2, "0");
@@ -97,11 +117,15 @@
 </script>
 
 <div class="card-base px-8 py-6">
-	{#each groups as group}
+	{#each groups as group, gi}
 		<div>
-			<div class="flex flex-row w-full items-center h-[3.75rem]">
+			<!-- 年份标题 -->
+			<div
+				class="archive-fade-in flex flex-row w-full items-center h-[3.75rem]"
+				style="--delay: {gi * 60}ms;"
+			>
 				<div
-					class="w-[15%] md:w-[10%] transition text-2xl font-bold text-right text-75"
+					class="w-[15%] md:w-[10%] text-2xl font-bold text-right text-75"
 				>
 					{group.year}
 				</div>
@@ -111,7 +135,7 @@
                   -outline-offset-[2px] z-50 outline-3"
 					></div>
 				</div>
-				<div class="w-[70%] md:w-[80%] transition text-left text-50">
+				<div class="w-[70%] md:w-[80%] text-left text-50">
 					{group.posts.length}
 					{i18n(
 						group.posts.length === 1
@@ -121,18 +145,20 @@
 				</div>
 			</div>
 
-			{#each group.posts as post}
+			{#each group.posts as post, pi}
 				<a
 					href={post.url || `/posts/${post.id}/`}
 					aria-label={post.data.title}
-					class="group btn-plain !block h-10 w-full rounded-lg hover:text-[initial]"
+					class="archive-fade-in group btn-plain !block h-10 w-full rounded-lg hover:text-[initial]"
+					style="--delay: {gi * 60 + (pi + 1) * 25}ms;"
 				>
 					<div
 						class="flex flex-row justify-start items-center h-full"
 					>
 						<!-- date -->
 						<div
-							class="w-[15%] md:w-[10%] transition text-sm text-right text-50"
+							class="w-[15%] md:w-[10%] text-sm text-right text-50
+                     transition-colors duration-100 ease-out group-hover:text-[var(--primary)]"
 						>
 							{formatDate(post.data.published)}
 						</div>
@@ -142,7 +168,7 @@
 							class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center"
 						>
 							<div
-								class="transition-all mx-auto w-1 h-1 rounded group-hover:h-5
+								class="transition-all duration-100 ease-out mx-auto w-1 h-1 rounded group-hover:h-5
                        bg-[oklch(0.5_0.05_var(--hue))] group-hover:bg-[var(--primary)]
                        outline outline-4 z-50
                        outline-[var(--card-bg)]
@@ -151,19 +177,27 @@
 							></div>
 						</div>
 
-						<!-- post title -->
+						<!-- category badge + post title -->
 						<div
 							class="w-[70%] md:max-w-[65%] md:w-[65%] text-left font-bold
-                     group-hover:translate-x-1 transition-all group-hover:text-[var(--primary)]
-                     text-75 pr-8 whitespace-nowrap overflow-ellipsis overflow-hidden"
+                     group-hover:translate-x-1 transition-transform duration-100 ease-out group-hover:text-[var(--primary)]
+                     text-75 pr-8 whitespace-nowrap overflow-ellipsis overflow-hidden flex items-center gap-1.5"
 						>
-							{post.data.title}
+							<span
+								class="inline-flex items-center shrink-0 text-xs font-medium px-1.5 py-0 rounded
+                       transition-[transform,box-shadow] duration-100 ease-out group-hover:shadow-sm group-hover:scale-105"
+								style="background-color: {getCategoryStyle(post.data.category).bg}; color: {getCategoryStyle(post.data.category).text};"
+							>
+								{getCategoryStyle(post.data.category).label}
+							</span>
+							<span class="overflow-hidden overflow-ellipsis">{post.data.title}</span>
 						</div>
 
 						<!-- tag list -->
 						<div
-							class="hidden md:block md:w-[15%] text-left text-sm transition
-                     whitespace-nowrap overflow-ellipsis overflow-hidden text-30"
+							class="hidden md:block md:w-[15%] text-left text-sm
+                     whitespace-nowrap overflow-ellipsis overflow-hidden text-30
+                     transition-colors duration-100 ease-out group-hover:text-50"
 						>
 							{formatTag(post.data.tags)}
 						</div>
@@ -173,3 +207,30 @@
 		</div>
 	{/each}
 </div>
+
+<style>
+	@keyframes archive-enter {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.archive-fade-in {
+		animation: archive-enter 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+		animation-delay: var(--delay, 0ms);
+		will-change: transform, opacity;
+	}
+
+	/* 减少动画偏好的用户：直接显示 */
+	@media (prefers-reduced-motion: reduce) {
+		.archive-fade-in {
+			animation: none;
+			opacity: 1;
+		}
+	}
+</style>
