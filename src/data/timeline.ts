@@ -2,6 +2,97 @@ import type { TimelineItem } from "../components/features/timeline/types";
 
 export const timelineData: TimelineItem[] = [
 	{
+		id: "klein-hnn-research",
+		title: "Klein Manifold Neural Networks — MHUG Lab",
+		description:
+			"在 MHUG 实验室 Ziheng Chen 博士指导下，研究双曲神经网络在 Klein 流形上的构建。提出 Internal Lorentz Neural Network (ILNN)，实现完全内部的双曲架构，所有计算均在洛伦兹模型内完成，在双曲模型中达到 SOTA 性能。",
+		type: "project",
+		startDate: "2026-02-07",
+		endDate: "2026-05-31",
+		location: "Trento, Italy (Remote)",
+		organization: "University of Trento — MHUG Lab",
+		skills: [
+			"Hyperbolic Geometry",
+			"PyTorch",
+			"Riemannian Manifolds",
+			"Klein Model",
+			"Lorentz Model",
+		],
+		achievements: [
+			"搭建 Klein 流形上的神经网络并对标其他流形",
+			"提出 ILNN 全内部双曲架构",
+			"预期顶会论文产出",
+		],
+		links: [
+			{
+				name: "MHUG Lab",
+				url: "https://mhug.disi.unitn.it/",
+				type: "website",
+			},
+		],
+		icon: "material-symbols:science",
+		color: "#7C3AED",
+		featured: true,
+	},
+	{
+		id: "meng-diffusion-research",
+		title: "Diffusion Posterior Sampling 暑期研究",
+		description:
+			"在浙江大学孟祥明教授指导下，研究 Diffusion Model 后验采样。方向为将 amortized flow matching 与 per-observation guidance (FIG) 在科学逆问题上进行系统对比与融合，桥接 SBI 经验与扩散模型前沿。",
+		type: "work",
+		startDate: "2026-06-15",
+		endDate: "2026-09-05",
+		location: "Hangzhou, CN",
+		organization: "Zhejiang University",
+		skills: [
+			"Diffusion Models",
+			"Flow Matching",
+			"SBI",
+			"PyTorch",
+			"Bayesian Inference",
+		],
+		achievements: [
+			"Amortized flow vs per-observation diffusion 系统对比",
+			"Hybrid 方法：amortized warm start + FIG-style guidance",
+			"科学逆问题（SIR 模型）上的 flow matching posterior estimation",
+		],
+		icon: "material-symbols:science",
+		color: "#059669",
+		featured: true,
+	},
+	{
+		id: "yangyue-fraud-research",
+		title: "金融反诈深度学习研究（续）",
+		description:
+			"在清华大学杨悦学姐指导下，继续 T-BiLSTM 贷款违约预测研究。基于 Freddie Mac 时序数据，扩展 KAN 架构与 SHAP 可解释性分析，推进期刊版论文。",
+		type: "project",
+		startDate: "2026-04-10",
+		location: "Nottingham, UK (Remote)",
+		organization: "Tsinghua University (Collaboration)",
+		skills: [
+			"Transformer",
+			"BiLSTM",
+			"KAN",
+			"SHAP",
+			"Credit Risk",
+			"PyTorch",
+		],
+		achievements: [
+			"CSCR III 2024 会议论文已发表",
+			"KAN-GRU/LSTM 架构 AUC 提升 12%",
+			"SHAP 跨模型可解释性分析",
+		],
+		links: [
+			{
+				name: "GitHub",
+				url: "https://github.com/Yingurt001/Imbalancing-antifraud",
+				type: "project",
+			},
+		],
+		icon: "material-symbols:code",
+		color: "#DC2626",
+	},
+	{
 		id: "sbi-research",
 		title: "SBI Neural Posterior Estimation 研究",
 		description:
