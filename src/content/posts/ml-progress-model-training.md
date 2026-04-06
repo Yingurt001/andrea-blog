@@ -1,5 +1,5 @@
 ---
-title: "机器学习进度 #3: 模型训练和优化"
+title: "Machine Learning Progress #3: Model Training and Optimization"
 published: 2025-01-10
 description: 完成模型初始训练，通过超参数调优将验证准确率从72%提升到78%。
 tags: [Training, Optimization, 学习进度]

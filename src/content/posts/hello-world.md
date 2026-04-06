@@ -1,5 +1,5 @@
 ---
-title: 你好，世界！
+title: Hello World
 published: 2026-03-31
 description: 我的第一篇博客文章，记录建站的初衷。
 tags:

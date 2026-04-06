@@ -1,5 +1,5 @@
 ---
-title: "机器学习进度 #1: 完成神经网络基础学习"
+title: "Machine Learning Progress #1: Neural Network Foundation"
 published: 2025-01-20
 description: 本周完成神经网络基础理论学习，包括感知机、MLP和反向传播，开始PyTorch实践。
 tags: [Neural Networks, PyTorch, 学习进度]

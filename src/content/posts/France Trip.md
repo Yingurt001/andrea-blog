@@ -1,5 +1,5 @@
 ---
-title: 法国旅行总结
+title: France Trip Conclusion
 published: 2026-04-05
 description: 五天四晚的法国旅行很快就结束了，在这匆忙的行程里，重新拥有了面对生活的勇气
 tags:

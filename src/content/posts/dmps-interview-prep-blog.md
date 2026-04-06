@@ -1,5 +1,5 @@
 ---
-title: 从 SBI 到 DMPS：生成模型、后验采样与我的暑研面试
+title: From SBI 到 DMPS：Gneration Model And My Plan in ZJU
 published: 2026-04-01
 description: 一篇长文数学科普——从 Normalizing Flow 到 Diffusion Model 到 Flow Matching，再到 DMPS 如何用闭式 likelihood score 做快速后验采样，最后是我把 NPE 和 DMPS 接起来的 Hybrid 实验。
 tags:
