@@ -109,6 +109,15 @@ const diaryData: DiaryItem[] = [
 		mood: "😭",
 		tags: ["失眠"],
 	},
+
+	{
+		id: 13,
+		content:
+			"今天模拟面试了一下，关于讲讲SBI的经历我感觉还行，但是motivation我还讲不好，还得练练",
+		date: "2026-04-10T17:22:00Z",
+		mood: "😭",
+		tags: ["失眠"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
