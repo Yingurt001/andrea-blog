@@ -153,6 +153,14 @@ const diaryData: DiaryItem[] = [
 		mood: "☺️",
 		tags: ["顿悟"],
 	},
+
+	{
+		id: 18,
+		content: "面试日，加油！",
+		date: "2026-04-17T09:19:00Z",
+		mood: "☺️",
+		tags: ["冲刺"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
