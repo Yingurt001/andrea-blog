@@ -161,6 +161,14 @@ const diaryData: DiaryItem[] = [
 		mood: "☺️",
 		tags: ["冲刺"],
 	},
+
+	{
+		id: 19,
+		content: "集群停摆，这可咋办",
+		date: "2026-04-21T12:07:00Z",
+		mood: "☺️",
+		tags: ["奋斗"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
