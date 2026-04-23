@@ -76,6 +76,24 @@ export const friendsData: FriendItem[] = [
 		siteurl: "https://developer.mozilla.org",
 		tags: ["Docs", "Reference"],
 	},
+	{
+		id: 9,
+		title: "Leonardo @ CINECA",
+		imgurl:
+			"https://www.google.com/s2/favicons?domain=leonardo-supercomputer.cineca.eu&sz=128",
+		desc: "EuroHPC pre-exascale supercomputer. 4,500 node-hours granted via Development Access Call.",
+		siteurl: "https://leonardo-supercomputer.cineca.eu/",
+		tags: ["HPC", "EuroHPC"],
+	},
+	{
+		id: 10,
+		title: "EuroHPC JU",
+		imgurl:
+			"https://www.google.com/s2/favicons?domain=eurohpc-ju.europa.eu&sz=128",
+		desc: "European High Performance Computing Joint Undertaking — the body behind the Development Access Call.",
+		siteurl: "https://www.eurohpc-ju.europa.eu/",
+		tags: ["HPC", "EuroHPC"],
+	},
 ];
 
 // 获取所有友情链接数据

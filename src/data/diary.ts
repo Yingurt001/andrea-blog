@@ -169,6 +169,24 @@ const diaryData: DiaryItem[] = [
 		mood: "☺️",
 		tags: ["奋斗"],
 	},
+
+	{
+		id: 20,
+		content:
+			"收到剑桥的 offer 了！！！DIS 项目，10 月入学。从面试前想逃避想玩手机，到面试日一早给自己打气，再到今天拿到结果——一切紧张、自我怀疑、通宵模拟都值得了。谢谢那个没有放弃自己的我。",
+		date: "2026-04-21T18:00:00Z",
+		mood: "🥹",
+		tags: ["里程碑", "剑桥"],
+	},
+
+	{
+		id: 21,
+		content:
+			"EuroHPC Development Access 批下来了！Leonardo BOOSTER 4500 node-hours，12 个月。作为 PI 提交的提案竟然真的过了，心里还有点不真实。以后跑 Klein 的大规模对比实验再也不用在本地排队了。这一周真的是双喜临门。",
+		date: "2026-04-23T15:00:00Z",
+		mood: "🎉",
+		tags: ["里程碑", "HPC"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）

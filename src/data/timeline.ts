@@ -2,6 +2,31 @@ import type { TimelineItem } from "../components/features/timeline/types";
 
 export const timelineData: TimelineItem[] = [
 	{
+		id: "cambridge-dis",
+		title: "MPhil in Data Intensive Science — University of Cambridge",
+		description:
+			"录取剑桥大学物理科学学院 Data Intensive Science 硕士项目，由 Cavendish Laboratory、Institute of Astronomy 和 DAMTP 三系联合开设，聚焦机器学习、统计推断与大规模数据分析在物理科学中的应用。2026 年 10 月入学。",
+		type: "education",
+		startDate: "2026-10-01",
+		endDate: "2027-07-31",
+		location: "Cambridge, UK",
+		organization: "University of Cambridge",
+		skills: [
+			"Machine Learning",
+			"Statistical Inference",
+			"Data Analysis",
+			"Physics",
+		],
+		achievements: [
+			"录取 MPhil in Data Intensive Science",
+			"School of the Physical Sciences",
+			"2026-10 入学",
+		],
+		icon: "material-symbols:school",
+		color: "#A3262D",
+		featured: true,
+	},
+	{
 		id: "klein-hnn-research",
 		title: "Klein Manifold Neural Networks — MHUG Lab",
 		description:
