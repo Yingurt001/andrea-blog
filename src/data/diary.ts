@@ -195,6 +195,13 @@ const diaryData: DiaryItem[] = [
 		mood: "🎉",
 		tags: ["开心", "HPC"],
 	},
+	{
+		id: 23,
+		content: "修改Nips论文ing,你一定可以的！",
+		date: "2026-04-27T21:12:00Z",
+		mood: "🎉",
+		tags: ["开心", "HPC"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
