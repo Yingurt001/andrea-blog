@@ -257,6 +257,14 @@ const diaryData: DiaryItem[] = [
 		mood: "🎉",
 		tags: ["思考", "学习"],
 	},
+	{
+		id: 31,
+		content:
+			"好累好累",
+		date: "2026-04-30T14:01:46Z",
+		mood: "🥺",
+		tags: ["难过"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
