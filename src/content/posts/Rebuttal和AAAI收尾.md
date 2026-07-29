@@ -1,5 +1,5 @@
 ---
-title: "7.29"
+title: Rebuttal和AAAI收尾
 published: 2026-07-29
 description: Rebuttal的第三天
 tags:
