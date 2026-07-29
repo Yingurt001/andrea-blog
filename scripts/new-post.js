@@ -42,14 +42,18 @@ if (!fs.existsSync(dirPath)) {
 	fs.mkdirSync(dirPath, { recursive: true });
 }
 
+// 标题必须带引号：不然像 7.29 这种会被 YAML 读成数字，2026-01-01 会被读成日期。
+// JSON.stringify 顺带处理了标题里本身含引号的情况。
+const title = JSON.stringify(args[0].replace(fileExtensionRegex, ""));
+
 const content = `---
-title: ${args[0]}
+title: ${title}
 published: ${getDate()}
 description: ''
 image: ''
 tags: []
 category: ''
-draft: false 
+draft: false
 lang: ''
 ---
 `;
