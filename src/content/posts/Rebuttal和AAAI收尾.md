@@ -8,6 +8,7 @@ tags:
   - 随笔
 category: 生活
 draft: false
+updated: 2026-07-29T14:26:00
 ---
 
 # AAAI Submission Complete？
