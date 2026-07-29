@@ -6,6 +6,7 @@ import FloatingTOC from "../features/toc/FloatingTOC.astro";
 import BackToHome from "./BackToHome.astro";
 import BackToTop from "./BackToTop.astro";
 import MusicFabButton from "./MusicFabButton.svelte";
+import OpenImagesFolder from "./OpenImagesFolder.astro";
 
 interface Props {
 	headings?: MarkdownHeading[];
@@ -28,6 +29,14 @@ const { headings = [] } = Astro.props;
 		siteConfig.toc.enable && siteConfig.toc.floating && (
 			<div class="floating-control-item" data-control-key="toc">
 				<FloatingTOC headings={headings} />
+			</div>
+		)
+	}
+	{
+		/* 只在 pnpm dev 下出现：生产环境没有本机 Finder 可开 */
+		import.meta.env.DEV && (
+			<div class="floating-control-item" data-control-key="open-images">
+				<OpenImagesFolder />
 			</div>
 		)
 	}

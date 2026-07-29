@@ -1,0 +1,38 @@
+---
+/**
+ * 开发环境专用：一键在 Finder 里打开 public/images。
+ *
+ * 页面自己跳不了 file://（浏览器安全限制），所以点一下是去调
+ * /api/open-folder，由 dev server 在本机执行 open。
+ * 整个组件在生产构建里不会渲染，见 FloatingControls.astro 的 import.meta.env.DEV 判断。
+ */
+import FloatingButton from "@components/common/FloatingButton.astro";
+---
+
+<FloatingButton
+	id="open-images-btn"
+	icon="material-symbols:folder-open-outline-rounded"
+	ariaLabel="在 Finder 中打开图片文件夹"
+	onclick="openImagesFolder()"
+/>
+
+<script is:inline>
+	window.openImagesFolder = async function () {
+		const btn = document.getElementById("open-images-btn");
+		try {
+			// 末尾斜杠不能省：站点配了 trailingSlash: "always"，少了会 404
+			const res = await fetch("/api/open-folder/");
+			const data = await res.json();
+			if (!data.ok) {
+				console.error("[open-images] 打开失败:", data.reason);
+			}
+			// 成功/失败都给个视觉反馈，省得以为没点上
+			if (btn) {
+				btn.classList.add("active");
+				setTimeout(() => btn.classList.remove("active"), 400);
+			}
+		} catch (err) {
+			console.error("[open-images] 请求失败:", err);
+		}
+	};
+</script>
