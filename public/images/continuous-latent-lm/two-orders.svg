@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 510" role="img" aria-labelledby="title desc">
+  <title id="title">latent 生成顺序与 token 读出顺序是两回事</title>
+  <desc id="desc">LTF 一步并行生成 latent，但自回归读出 token；AURORA-LM 分块生成 latent，但用 query-based decoder 并行读出 token。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0c1430"/><stop offset="1" stop-color="#18113a"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b1bce8"/></marker>
+    <style>.cn{font-family:"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}.title{font-size:30px;font-weight:700;fill:#fff}.sub{font-size:16px;fill:#aeb8df}.name{font-size:24px;font-weight:700;fill:#fff}.label{font-size:15px;font-weight:650;fill:#eff2ff}.note{font-size:14px;fill:#bdc7eb}.arrow{stroke:#b1bce8;stroke-width:3;fill:none;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1200" height="510" rx="30" fill="url(#bg)"/>
+  <text x="50" y="58" class="cn title">最容易看错的一件事：latent 怎么出，和 token 怎么吐，是两道题</text>
+  <text x="50" y="88" class="cn sub">看到“并行”两个字先别急：它到底在说生成 latent，还是在说 Decoder 读回文字？</text>
+
+  <text x="64" y="165" class="cn name">LTF</text>
+  <text x="64" y="193" class="cn note">先狠压信息，再一步生成</text>
+  <rect x="250" y="132" width="364" height="100" rx="18" fill="#357fa9"/>
+  <text x="432" y="167" text-anchor="middle" class="cn label">latent：8 个位置一步全出</text>
+  <g fill="#8dd9e7"><rect x="315" y="184" width="24" height="24" rx="5"/><rect x="352" y="184" width="24" height="24" rx="5"/><rect x="389" y="184" width="24" height="24" rx="5"/><rect x="426" y="184" width="24" height="24" rx="5"/><rect x="463" y="184" width="24" height="24" rx="5"/><rect x="500" y="184" width="24" height="24" rx="5"/><rect x="537" y="184" width="24" height="24" rx="5"/></g>
+  <path d="M626 182H694" class="arrow"/>
+  <rect x="708" y="132" width="424" height="100" rx="18" fill="#a45077"/>
+  <text x="920" y="167" text-anchor="middle" class="cn label">token：自回归，一个个吐</text>
+  <g fill="#f4b3d0"><rect x="775" y="184" width="32" height="24" rx="5"/><rect x="825" y="184" width="32" height="24" rx="5"/><rect x="875" y="184" width="32" height="24" rx="5"/><rect x="925" y="184" width="32" height="24" rx="5"/><rect x="975" y="184" width="32" height="24" rx="5"/><rect x="1025" y="184" width="32" height="24" rx="5"/></g>
+  <path d="M807 196H818M857 196H868M907 196H918M957 196H968M1007 196H1018" class="arrow"/>
+
+  <line x1="50" y1="270" x2="1150" y2="270" stroke="#6875a8" stroke-opacity=".7"/>
+  <text x="64" y="345" class="cn name">AURORA-LM</text>
+  <text x="64" y="373" class="cn note">不压信息，把活交给生成器</text>
+  <rect x="250" y="312" width="364" height="116" rx="18" fill="#357fa9"/>
+  <text x="432" y="347" text-anchor="middle" class="cn label">latent：按 block 依次生成</text>
+  <g><rect x="300" y="367" width="68" height="34" rx="8" fill="#8dd9e7"/><rect x="382" y="367" width="68" height="34" rx="8" fill="#79c3e9"/><rect x="464" y="367" width="68" height="34" rx="8" fill="#887de4"/><rect x="546" y="367" width="38" height="34" rx="8" fill="#b887e3"/></g>
+  <path d="M368 384H375M450 384H457M532 384H539" class="arrow"/>
+  <path d="M626 370H694" class="arrow"/>
+  <rect x="708" y="312" width="424" height="116" rx="18" fill="#a45077"/>
+  <text x="920" y="347" text-anchor="middle" class="cn label">token：Query Decoder 一次前向并行读回</text>
+  <g fill="#f4b3d0"><rect x="775" y="373" width="32" height="24" rx="5"/><rect x="825" y="373" width="32" height="24" rx="5"/><rect x="875" y="373" width="32" height="24" rx="5"/><rect x="925" y="373" width="32" height="24" rx="5"/><rect x="975" y="373" width="32" height="24" rx="5"/><rect x="1025" y="373" width="32" height="24" rx="5"/></g>
+  <path d="M792 407V416M842 407V416M892 407V416M942 407V416M992 407V416M1042 407V416" stroke="#f4b3d0" stroke-width="2"/>
+  <text x="50" y="476" class="cn note">判据：推理时是否必须把上一步生成的 token 再喂回去。注意力是因果的，不等于过程一定自回归。</text>
+</svg>

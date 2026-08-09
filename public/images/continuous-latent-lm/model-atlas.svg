@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1240" role="img" aria-labelledby="title desc">
+  <title id="title">九个连续文本生成模型架构速查</title>
+  <desc id="desc">按表示层、生成器和解码方式，横向比较 AURORA-LM、LTF、ELF、Cola-DLM、LDLM、Cosmos、TextLDM、FlowMapLM 和 LangFlow。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1230"/><stop offset="1" stop-color="#171038"/></linearGradient>
+    <style>
+      .cn{font-family:"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+      .title{font-size:31px;font-weight:700;fill:#f8f9ff}.sub{font-size:16px;fill:#aeb8df}
+      .head{font-size:17px;font-weight:700;fill:#cad2f3}.name{font-size:19px;font-weight:700;fill:#fff}
+      .main{font-size:16px;font-weight:650;fill:#fff}.small{font-size:13px;fill:#d8def6}.tag{font-size:12px;font-weight:700;fill:#11162d}
+    </style>
+  </defs>
+  <rect width="1400" height="1240" rx="30" fill="url(#bg)"/>
+  <text x="52" y="58" class="cn title">九个模型，九种“把难题塞给谁”</text>
+  <text x="52" y="88" class="cn sub">紫色管表示层，蓝色管生成器，粉色管读回文本；虚线边框表示没有独立 Autoencoder。</text>
+  <g class="cn head">
+    <text x="56" y="138">模型</text><text x="274" y="138">表示：latent 怎么来</text><text x="682" y="138">生成：怎么从噪声来</text><text x="1052" y="138">读回：怎么变成 token</text>
+  </g>
+  <line x1="48" y1="156" x2="1352" y2="156" stroke="#6270a7"/>
+
+  <g class="cn">
+    <rect x="38" y="176" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".045"/>
+    <text x="56" y="213" class="name">AURORA-LM</text><rect x="56" y="228" width="91" height="24" rx="12" fill="#ffd166"/><text x="101" y="245" text-anchor="middle" class="tag">DENOISER 派</text>
+    <rect x="252" y="190" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="219" class="main">满长、满宽，不替生成器减负</text><text x="272" y="243" class="small">c=1；Query Decoder；token/latent dropout</text>
+    <rect x="660" y="190" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="219" class="main">block-causal Flow Matching</text><text x="680" y="243" class="small">低秩入口 + tan-d + consistency + self-cond</text>
+    <rect x="1032" y="190" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="219" class="main">Query-based，并行读回</text><text x="1052" y="243" class="small">不喂已生成 token</text>
+
+    <rect x="38" y="292" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".025"/>
+    <text x="56" y="329" class="name">LTF</text><rect x="56" y="344" width="80" height="24" rx="12" fill="#7ce0cb"/><text x="96" y="361" text-anchor="middle" class="tag">压缩派</text>
+    <rect x="252" y="306" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="335" class="main">256 token → 8 latent，32× 压缩</text><text x="272" y="359" class="small">MAE dropping：逼 Encoder 真做摘要</text>
+    <rect x="660" y="306" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="335" class="main">MeanFlow，一步全出 latent</text><text x="680" y="359" class="small">latent 本身没有先后</text>
+    <rect x="1032" y="306" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="335" class="main">自回归 Decoder</text><text x="1052" y="359" class="small">token 仍然一个个吐</text>
+
+    <rect x="38" y="408" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".045"/>
+    <text x="56" y="445" class="name">ELF</text><rect x="56" y="460" width="80" height="24" rx="12" fill="#ffd166"/><text x="96" y="477" text-anchor="middle" class="tag">极简派</text>
+    <rect x="252" y="422" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="451" class="main">冻结 T5 表示，不压长度</text><text x="272" y="475" class="small">512 → 128 bottleneck</text>
+    <rect x="660" y="422" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="451" class="main">Flow Matching，全序列</text><text x="680" y="475" class="small">同一网络交替做去噪与解码</text>
+    <rect x="1032" y="422" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="451" class="main">t=1 解码分支，并行</text><text x="1052" y="475" class="small">联合 / 两阶段都做过</text>
+
+    <rect x="38" y="524" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".025"/>
+    <text x="56" y="561" class="name">Cola-DLM</text><rect x="56" y="576" width="80" height="24" rx="12" fill="#ee9cc2"/><text x="96" y="593" text-anchor="middle" class="tag">协同派</text>
+    <rect x="252" y="538" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="567" class="main">因果 VAE；不压长度；d=16/64/128</text><text x="272" y="591" class="small">KL + BERT masking 防语义塌陷</text>
+    <rect x="660" y="538" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="567" class="main">block-causal DiT</text><text x="680" y="591" class="small">timeshift 随 latent 维度校准</text>
+    <rect x="1032" y="538" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="567" class="main">VAE 与 DiT 联合微调</text><text x="1052" y="591" class="small">空间与生成器一起磨合</text>
+
+    <rect x="38" y="640" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".045"/>
+    <text x="56" y="677" class="name">LDLM</text><rect x="56" y="692" width="80" height="24" rx="12" fill="#ee9cc2"/><text x="96" y="709" text-anchor="middle" class="tag">全联合</text>
+    <rect x="252" y="654" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="683" class="main">可训练 Encoder 重塑预训练 LM 表示</text><text x="272" y="707" class="small">不用先造完 latent 再冻结</text>
+    <rect x="660" y="654" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="683" class="main">Encoder / Diffusion / Decoder 全联合</text><text x="680" y="707" class="small">warmup + adaptive t + decoder noise</text>
+    <rect x="1032" y="654" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="683" class="main">MSE Decoder loss</text><text x="1052" y="707" class="small">naive 联合训练会塌</text>
+
+    <rect x="38" y="756" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".025"/>
+    <text x="56" y="793" class="name">Cosmos</text><rect x="56" y="808" width="80" height="24" rx="12" fill="#7ce0cb"/><text x="96" y="825" text-anchor="middle" class="tag">流形派</text>
+    <rect x="252" y="770" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="799" class="main">最多 8× 压缩 + 冻结 LM 对齐</text><text x="272" y="823" class="small">perturb-and-recover 塑造平滑、抗噪流形</text>
+    <rect x="660" y="770" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="799" class="main">扩散生成 latent</text><text x="680" y="823" class="small">把主要功夫花在空间质量上</text>
+    <rect x="1032" y="770" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="799" class="main">token 重构 + 激活对齐</text><text x="1052" y="823" class="small">重构好不等于 diffusion 好</text>
+
+    <rect x="38" y="872" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".045"/>
+    <text x="56" y="909" class="name">TextLDM</text><rect x="56" y="924" width="80" height="24" rx="12" fill="#7ce0cb"/><text x="96" y="941" text-anchor="middle" class="tag">图像范式</text>
+    <rect x="252" y="886" width="378" height="72" rx="15" fill="#6557c9"/><text x="272" y="915" class="main">Transformer VAE；一 token 一 latent</text><text x="272" y="939" class="small">KL + REPA 对齐 Qwen3</text>
+    <rect x="660" y="886" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="915" class="main">DiT + Flow Matching，全序列</text><text x="680" y="939" class="small">报告 d=64 最优</text>
+    <rect x="1032" y="886" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="915" class="main">并行 Decoder</text><text x="1052" y="939" class="small">标准两阶段冻结</text>
+
+    <rect x="38" y="988" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".025"/>
+    <text x="56" y="1025" class="name">FlowMapLM</text><rect x="56" y="1040" width="94" height="24" rx="12" fill="#a8e6ff"/><text x="103" y="1057" text-anchor="middle" class="tag">绕开 AE</text>
+    <rect x="252" y="1002" width="378" height="72" rx="15" fill="#253354" stroke="#8290c2" stroke-dasharray="8 6"/><text x="272" y="1031" class="main">没有 Autoencoder：直接 one-hot</text><text x="272" y="1055" class="small">合法 token 就是 simplex 的顶点</text>
+    <rect x="660" y="1002" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="1031" class="main">one-hot flow + flow map</text><text x="680" y="1055" class="small">直接学跨时间跳转，主打少步 / 一步</text>
+    <rect x="1032" y="1002" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="1031" class="main">argmax</text><text x="1052" y="1055" class="small">无需单独 Decoder</text>
+
+    <rect x="38" y="1104" width="1324" height="100" rx="18" fill="#fff" fill-opacity=".045"/>
+    <text x="56" y="1141" class="name">LangFlow</text><rect x="56" y="1156" width="94" height="24" rx="12" fill="#a8e6ff"/><text x="103" y="1173" text-anchor="middle" class="tag">绕开 AE</text>
+    <rect x="252" y="1118" width="378" height="72" rx="15" fill="#253354" stroke="#8290c2" stroke-dasharray="8 6"/><text x="272" y="1147" class="main">没有独立 AE：token embedding 空间</text><text x="272" y="1171" class="small">连续表示，但不另造一套 latent</text>
+    <rect x="660" y="1118" width="342" height="72" rx="15" fill="#347ca8"/><text x="680" y="1147" class="main">Bregman Flow Matching</text><text x="680" y="1171" class="small">可学习调度 + self-conditioning</text>
+    <rect x="1032" y="1118" width="300" height="72" rx="15" fill="#a24e75"/><text x="1052" y="1147" class="main">几何直接对齐 token 目标</text><text x="1052" y="1171" class="small">统一 CE 与 Flow Matching</text>
+  </g>
+</svg>
