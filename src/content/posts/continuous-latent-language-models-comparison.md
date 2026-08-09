@@ -201,19 +201,127 @@ LangFlow 同样没有独立 Autoencoder，直接在 token embedding 空间里做
 - 想要一套最简洁、最容易迁移的 recipe，ELF 和 TextLDM 更像工程基线。
 - 想让 latent 真正为生成服务，Cola-DLM 和 LDLM 的联合训练更值得深挖，但训练风险也最高。
 
-## 那我们自己的 CDLM 站在哪？
+## 那我们自己的 JEPA-CDLM 到底在想什么？
 
-我现在更倾向把自己的方案放在两个极端之间：用冻结 T5 提供稳定语义基座，外接可训练的长度压缩器，把长度压到 4 倍或 8 倍，再让全序列 Flow Matching 一次性生成 latent。
+上一篇写到这里时，我只把自己的方案概括成“冻结 T5 + 4 倍压缩 + Flow Matching”。现在回头看，这句话太轻了，听上去只是选了一个不激进的压缩率。代码里真正想回答的问题其实更具体：**latent 不该只是 Autoencoder 重构任务的副产品，它得从出生那一刻起就为生成服务。**
 
-这个位置的好处是：不像 AURORA 那样把满长满宽的压力全交给 Denoiser，也不像 LTF 那样一口气压 32 倍、逼 Decoder 承担大量展开工作。
+项目代码里这条方法叫 `jepa_ae`。它没有完全押在 Encoder，也没有把锅全甩给 Denoiser，而是试图让表示学习和生成学习从第一步就围着同一个 clean endpoint 转。
 
-但它也暴露了接下来最该验证的三件事：
+![JEPA-CDLM 当前训练与推理接口](/images/continuous-latent-lm/jepa-cdlm-project.svg)
 
-1. **容错解码。** Decoder 不能只见过完美的 $z_0$，还应该见过生成器实际会产出的带偏差 $\hat z_0$。
-2. **宽度与 schedule 联动。** latent 宽度变了，noise schedule 不能照抄；AURORA 和 Cola-DLM 已经从两个方向给了证据。
-3. **重构与可生成性分开评估。** 不只看 token reconstruction，还要看局部扰动后是否稳定、生成 latent 是否落在 Decoder 能读的邻域。
+### 我们先站在两个极端中间
 
-所以我们要设计的不是一个孤立的压缩器，而是一份三方都能履约的 latent 合同。
+我们的起点是冻结的 T5-small。T5 先把 128 个 token 变成 128×512 的 contextual features，再交给可训练压缩器。当前重点 backend 是一个确定性的 TextVAE，名字虽然还叫 VAE，实际上没有 $\mu$、$\log\sigma$、重参数采样或 KL，更准确地说是 TextAE。
+
+它把每 4 个 token feature 拼成一个 patch，因此无条件 LM1B 的 128-token canvas 会变成 32 个 latent slot。`tiny` 版本输出 512 维 latent，`small` 输出 768 维。Decoder 也是并行的，把 slot 展回 token-aligned T5 feature，再通过共享 unembed 还原文字。
+
+这让我们的容量位置正好夹在两头：
+
+- 比 AURORA-LM 克制。它一 token 一 latent、宽度 768/1024，我们先把长度压 4 倍。
+- 比 LTF 保守。它从 256 压到 8，压 32 倍；我们不要求 32 个 slot 承担整段文章的高度抽象。
+- 跟 Cosmos 的 8 倍压缩也不同。我们先用 4 倍作为能诊断、能逐项消融的工作点，不急着拿压缩率当成绩。
+
+这里还有一个容易被忽略的设计：condition 和 target 分开 patch，condition query 看不到 target，target query 可以看 condition 和全部 target。没有 condition 时，同一个模型自然退化成全 target 的双向网格。也就是说，翻译和无条件生成共用一套 TextAE，不需要藏两套 dataset-specific 架构。
+
+### JEPA 在这里不是装饰，它负责固定靶心
+
+训练时有两个 compressor。
+
+Online compressor 看到被加噪、置零或 mask 的 target feature，输出 $z_{\text{corrupt}}$；EMA compressor 读取 clean feature，慢慢更新，给出 stop-gradient 的 $z^*$。随后同一个 DiT 在 $t=1$ 扮演 JEPA predictor，把 corrupted online latent 预测回 $z^*$。
+
+这条分支同时接三种监督：预测 latent 对齐 EMA teacher 的 JEPA MSE，Decoder hidden 对齐 T5 feature 的 MSE，以及最终 token CE。Flow Matching 则从 Gaussian noise 出发，也学习抵达同一个 $z^*$。推理时，ODE rollout 先生成 target latent，再过一次 $t=1$ predictor，最后由 TextAE Decoder 并行读回 token。
+
+我们的想法其实很朴素：
+
+> 如果 clean latent 既能被受损表征预测，又能被 Flow 从纯噪声生成，还能被 Decoder 稳定读回 token，那么它才算是一块合格的生成空间。
+
+为了防止 online latent 塌成常量，代码里还有 SigReg、VICReg 接口和运行时 latent restandardization；DiT 使用 x-prediction、self-conditioning 和独立的 decode final head。这些组件并不自动构成创新，它们更像护栏。JEPA-CDLM 真正要证明的是：这套 teacher–student 结构有没有把 latent 塑造成“更容易生成”的空间，而不只是“更容易重构”的空间。
+
+这里要把进度说清楚。确定性 TextAE、EMA teacher、JEPA terminal predictor、联合 Flow 和整套 endpoint probe 都已经在代码里；但目前最完整的生成实验主要来自前一版 Cosmos/Perceiver compressor 谱系，不是 TextAE 的最终成绩单。两种 backend 共用 `jepa_ae` 方法接口，所以旧实验能暴露 corruption、梯度和 readout 的结构性问题，却不能替新 TextAE 宣布胜利。
+
+### 然后实验给我们泼了一盆很值钱的冷水
+
+我们已经审计了 57 个 run-like 实验目录。最反直觉、也最有价值的发现是：**重构做得过于漂亮，往往正是生成正在变坏的信号。**
+
+| 配置 | real-token 重构 | Gen-PPL ↓ | MAUVE ↑ | 发生了什么 |
+| --- | ---: | ---: | ---: | --- |
+| 经典 LM1B，epoch 10 | 可用但不追求满分 | 110.50 | 0.8892 | raw T5 强腐蚀 + feature/Flow 双 bottleneck |
+| Cosmos direct-768，2.5 epoch | acc≈94% | 1042.83 | 0.0174 | 噪声放在可训练投影后，模型走了高 SNR 捷径 |
+| raw T5 pre-projection noise，2.5 epoch | acc≈58% | 234.55 | 0.5695 | 把噪声移到投影前，生成明显恢复 |
+| token-LN + bottleneck + $\sigma=1$ | acc≈99.4% | 796.55 | 0.0938 | 名义相同的噪声，在归一化坐标里太弱 |
+| token-LN + bottleneck + $\sigma=5$ | acc≈65% | 228.79 | 0.7953 | 更难重构，反而得到更好的生成覆盖 |
+
+这几组实验把问题从“latent 该用 512 还是 768 维”改写成了更靠谱的版本：**corruption 到底破坏了多少信息，模型又能不能绕过它？**
+
+同一个 $\sigma=1$，加在标准差约 0.11 的 raw T5 feature 上，是一次相当凶的破坏；加在 LayerNorm 后标准差约 1 的 feature 上，只剩下大约 0 dB。更糟的是，如果先经过可训练投影再加噪，投影可以把信号尺度放大，让固定噪声越来越像摆设。CE 会飞快下降，Encoder 梯度越来越大，Flow loss 和生成质量却一起恶化。
+
+这不是普通的“过拟合”。Online compressor、EMA clean endpoint、训练 corruption、Flow prediction 和真实 ODE terminal，正在形成几套互不兼容的坐标。
+
+### 当前最大的洞：Decoder 学会接一种球，比赛却传来另一种球
+
+现有 `jepa_ae` 默认用 $z_{\text{corrupt}}$ 训练 $t=1$ predictor 和 readout。CE、feature MSE、JEPA 都会沿着这条路更新 online compressor、共享 DiT trunk 和 Decoder；标准 Flow loss 在 EMA-teacher 配置下不会更新 compressor。
+
+可推理时 Decoder 前面收到的是 ODE terminal。训练保证的是
+
+$$
+F_{t=1}(z_{\text{corrupt}}) \approx z^*,
+$$
+
+却没有直接保证
+
+$$
+F_{t=1}(z_{\text{ODE}}) \in \mathcal B_{\text{decoder}},
+$$
+
+其中 $\mathcal B_{\text{decoder}}$ 是 Decoder 能稳定读出正确 token 的区域。
+
+项目里的反事实 probe 已经见过最坏情况：某个 direct-768 checkpoint 的 $t=1$ readout 能把训练 noisy latent 的 real-token CE 从 2.068 降到 0.030，却把 clean latent 的 CE 从 4.656 推坏到 10.060，也把 Flow x-pred 的 CE 从 5.497 推坏到 9.892。它不是没有学会收缩，而是收缩到了错误的私人地址。
+
+这也是我现在对整个项目最明确的判断：我们缺的不是再加一个 latent regularizer，而是让 readout 直接覆盖生成时真正会到达的 support。比较自然的下一步，是让一部分训练 row 使用 detached late-Flow prediction，例如 $t\in[0.7,1]$，剩余 row 继续保留 noisy 和 clean anchor。这样既不把早期高噪声状态硬塞给 Decoder，也能逐步关上训练与推理的接口缝。
+
+代码已经有一个 `decode_from_flow_prediction` 的全开/全关实验口，但上面这种按概率混合、只选 late-$t$ 的稳定版本还没有成为默认方法。它仍然是待验证方案，不是已经拿到的贡献。
+
+## 所以，这个项目到底有没有创新性？
+
+短答案：**有研究创新的胚子，但当前代码堆叠本身还不够成为一个强 novelty claim。**
+
+| 候选贡献 | 我的判断 | 审稿人最可能怎么打 | 需要什么证据才能站住 |
+| --- | --- | --- | --- |
+| 冻结 T5 + 4× TextAE + latent Flow | 工程价值明确，方法新颖性偏弱 | “LTF、Cosmos、TextLDM 都做过压缩 latent” | matched compute 下证明 4× 的速度/质量 Pareto 优于不压和 8×/32× |
+| EMA teacher + JEPA predictor 塑形 compressed latent | 应用级新颖性中等，有潜力 | “BYOL/JEPA + denoising + Flow 的组合，机制并不新” | 同架构只把 $\lambda_{JEPA}$ 从 0 改到 1，生成质量和 endpoint geometry 都稳定改善 |
+| 同一个 DiT 同时做 random-$t$ Flow 与 terminal JEPA prediction | 组合新颖性中等偏高 | “ELF/LDLM 已经联合训练，Cosmos 也做扰动恢复” | 证明共享 predictor 比分离网络或普通 denoising AE 更好，而不是参数量红利 |
+| 统一 condition/target fixed-canvas TextAE 合同 | 架构整合干净，但更像系统贡献 | “这是 mask 和工程实现选择” | 在翻译、LM1B、XSum 上复用同一 backend，并给出严格 no-leak 与泛化结果 |
+| 让 late-Flow/ODE landing support 直接进入 Decoder 训练 | 目前最强的方法创新候选 | “AURORA consistency、LDLM decoder noise 已经在处理 train–test gap” | 证明我们对齐的是 decoder-sensitive landing basin，并用 direct-vs-$t=1$、margin/CE 与生成指标建立因果链 |
+
+我不会把“首次把 JEPA 用在 latent diffusion language model”直接写进论文摘要。这个说法太容易被 Cosmos 的 perturb-and-recover、普通 EMA self-distillation，以及更广义的 JEPA/denoising 文献击穿。
+
+更稳的定位是：**我们发现并刻画了连续 latent language model 的 Decoder-interface mismatch，再用 generation-aware predictive representation learning 去关闭它。**JEPA 是工具，接口问题才是论文故事。如果 late-Flow readout 对齐最后无效，那也应该老实放弃这条 claim，而不是靠换名字保住它。
+
+## 接下来最重要的不是多跑，而是把因果拆干净
+
+现在仓库里可调开关很多，但下一轮不该再一次改五六项。按“每次只改一个变量”的原则，我更想先回答下面这些问题：
+
+| 问题 | 最小对照 | 它回答什么 |
+| --- | --- | --- |
+| 4× 压缩本身值不值 | ELF full-token → 零参数 patchify 4× | 只看长度压缩，不给 learned compressor 抢功 |
+| 学习式 TextAE 有没有贡献 | patchify 4× → TextAE 4× | 固定 Flow 和容量，检查可学习表示是否真有用 |
+| JEPA objective 有没有贡献 | 同一 `jepa_ae`，$\lambda_{JEPA}=0\to1$ | 避免把 EMA、联合训练、参数量一起混进“JEPA 提升” |
+| EMA teacher 是否必要 | teacher=none → teacher=EMA | 稳定靶心的收益是否超过 moving-target 代价 |
+| landing 对齐是否治到根上 | corrupted-only readout → 25% late-Flow mix → 50% mix | 是否真正改善 ODE endpoint，而不是继续刷训练 CE |
+| 压缩率能否继续提高 | 最优协议下 $K=1\to4\to8$ | 等接口稳定后再谈速度–质量 Pareto |
+
+筛选也要克制。所有候选先跑短轮，1 epoch 只负责排除不收敛和明显坍缩；有希望的跑到 3 epoch 看趋势，最后只留下 JEPA on/off、最强 baseline 和 landing-aligned 版本跑足 10 epoch。结果接近时再补 3 个 seed，不拿单次小差距讲故事。
+
+评估不能只放 reconstruction CE。每个 checkpoint 至少要固定报告 1,024-sample Gen-PPL、MAUVE、unigram entropy、输出长度、empty count、real-token CE，以及 noisy / clean / matched-Flow / ODE terminal 在 direct Decoder 与 $t=1$ readout 下的成对变化。
+
+这里还有几条很干脆的 kill rule：
+
+- TextAE 赢不了零参数 patchify，说明“学一个压缩空间”的故事很弱。
+- $\lambda_{JEPA}=1$ 只让重构更好，却不改善 Gen-PPL、MAUVE 或 landing 指标，JEPA 就不能算主要贡献。
+- late-Flow mix 降低训练 CE，却继续伤害 ODE endpoint，说明我们又造了一个私人 basin。
+- 4× 在相同采样步数和计算预算下没有带来速度–质量优势，就别把压缩率写进标题。
+
+我反而觉得这种“随时准备杀死自己想法”的状态很健康。创新不是从模块名字里找出来的，是从一个别人没有解释清楚的失败里长出来，再由一组谁都挑不出混变量的实验保下来。
 
 ## 最后：这个领域不是在找一种 latent，而是在分配困难
 

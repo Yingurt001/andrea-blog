@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">JEPA-CDLM 当前训练与推理接口</title>
+  <desc id="desc">冻结 T5 特征进入在线 TextVAE 和 EMA 教师，JEPA、Flow Matching 与解码损失共享同一潜空间；图中标出训练 readout 与 ODE endpoint 的接口错位。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1330"/><stop offset="1" stop-color="#1a103c"/></linearGradient>
+    <linearGradient id="z" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7767ec"/><stop offset="1" stop-color="#32b9ce"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b5c0eb"/></marker>
+    <marker id="warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ff8a9d"/></marker>
+    <style>
+      .cn{font-family:"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}.title{font-size:31px;font-weight:700;fill:#fff}.sub{font-size:16px;fill:#aeb8df}.lane{font-size:18px;font-weight:700;fill:#f4f6ff}.bt{font-size:18px;font-weight:700;fill:#fff}.bs{font-size:14px;fill:#e0e5fa}.note{font-size:14px;fill:#bfc8eb}.tag{font-size:13px;font-weight:700;fill:#1a1730}.arrow{stroke:#b5c0eb;stroke-width:3;fill:none;marker-end:url(#arr)}.dashed{stroke-dasharray:8 7}.danger{stroke:#ff8a9d;stroke-width:3;fill:none;stroke-dasharray:8 7;marker-end:url(#warn)}
+    </style>
+  </defs>
+  <rect width="1200" height="820" rx="30" fill="url(#bg)"/>
+  <text x="50" y="58" class="cn title">我们真正想做的：让表示、生成和读回签同一份 latent 合同</text>
+  <text x="50" y="88" class="cn sub">当前 JEPA-AE 已经把三条训练支路接在一起，但默认 readout 仍没直接见到真实 ODE terminal。</text>
+
+  <rect x="50" y="124" width="1100" height="178" rx="22" fill="#fff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".45"/>
+  <text x="72" y="158" class="cn lane">表示：冻结语义地基，学习 4× 压缩 latent</text>
+  <rect x="82" y="190" width="156" height="76" rx="16" fill="#596681"/><text x="160" y="220" text-anchor="middle" class="cn bt">冻结 T5</text><text x="160" y="244" text-anchor="middle" class="cn bs">128×512 features</text>
+  <rect x="320" y="182" width="228" height="92" rx="18" fill="#6659cb"/><text x="434" y="216" text-anchor="middle" class="cn bt">Online TextVAE</text><text x="434" y="240" text-anchor="middle" class="cn bs">target 加噪；4 token → 1 slot</text><text x="434" y="261" text-anchor="middle" class="cn bs">128 token → 32 slots</text>
+  <rect x="650" y="182" width="228" height="92" rx="18" fill="#68588e"/><text x="764" y="216" text-anchor="middle" class="cn bt">EMA TextVAE</text><text x="764" y="240" text-anchor="middle" class="cn bs">读 clean features</text><text x="764" y="261" text-anchor="middle" class="cn bs">stop-grad teacher</text>
+  <rect x="972" y="190" width="146" height="76" rx="16" fill="url(#z)"/><text x="1045" y="220" text-anchor="middle" class="cn bt">z* clean</text><text x="1045" y="244" text-anchor="middle" class="cn bs">共同目标端点</text>
+  <path d="M238 228H272" stroke="#b5c0eb" stroke-width="3" fill="none"/>
+  <circle cx="280" cy="228" r="6" fill="#b5c0eb"/>
+  <path d="M288 228H310" class="arrow"/>
+  <path d="M280 234V284H620V228H640" class="arrow"/>
+  <path d="M878 228H962" class="arrow"/>
+  <text x="422" y="298" class="cn note">clean teacher view（与受损 online view 并行分流）</text>
+
+  <rect x="50" y="326" width="1100" height="260" rx="22" fill="#fff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".45"/>
+  <text x="72" y="362" class="cn lane">联合训练：JEPA 负责预测稳定端点，Flow 负责从噪声抵达它</text>
+  <rect x="88" y="398" width="190" height="78" rx="16" fill="url(#z)"/><text x="183" y="428" text-anchor="middle" class="cn bt">z corrupt</text><text x="183" y="452" text-anchor="middle" class="cn bs">online target view</text>
+  <rect x="368" y="390" width="238" height="94" rx="18" fill="#8b5bd2"/><text x="487" y="424" text-anchor="middle" class="cn bt">共享 DiT · t=1 Predictor</text><text x="487" y="448" text-anchor="middle" class="cn bs">预测 z₁，对齐 EMA z*</text><text x="487" y="469" text-anchor="middle" class="cn bs">JEPA MSE</text>
+  <rect x="710" y="398" width="190" height="78" rx="16" fill="#aa527b"/><text x="805" y="428" text-anchor="middle" class="cn bt">TextVAE Decoder</text><text x="805" y="452" text-anchor="middle" class="cn bs">feature MSE + token CE</text>
+  <rect x="982" y="398" width="136" height="78" rx="16" fill="#df6c8c"/><text x="1050" y="428" text-anchor="middle" class="cn bt">token</text><text x="1050" y="452" text-anchor="middle" class="cn bs">并行读回</text>
+  <path d="M278 437H358" class="arrow"/><path d="M606 437H700" class="arrow"/><path d="M900 437H972" class="arrow"/>
+
+  <rect x="88" y="500" width="190" height="60" rx="15" fill="#596681"/><text x="183" y="526" text-anchor="middle" class="cn bt">Gaussian ε</text><text x="183" y="548" text-anchor="middle" class="cn bs">t=0</text>
+  <rect x="368" y="500" width="238" height="60" rx="15" fill="#367fa8"/><text x="487" y="526" text-anchor="middle" class="cn bt">同一个共享 DiT · Flow</text><text x="487" y="548" text-anchor="middle" class="cn bs">x-pred / Flow Matching</text>
+  <rect x="710" y="500" width="190" height="60" rx="15" fill="url(#z)"/><text x="805" y="526" text-anchor="middle" class="cn bt">预测 clean z</text><text x="805" y="548" text-anchor="middle" class="cn bs">目标仍是 EMA z*</text>
+  <path d="M278 530H358" class="arrow"/><path d="M606 530H700" class="arrow"/>
+  <path d="M1045 266V296 C1045 316 805 316 805 490" class="arrow dashed"/>
+
+  <rect x="50" y="610" width="1100" height="154" rx="22" fill="#301a36" stroke="#ff8a9d" stroke-opacity=".7"/>
+  <text x="72" y="647" class="cn lane">推理时的接口缺口：训练会修 z corrupt，采样却交来 ODE terminal</text>
+  <rect x="86" y="680" width="170" height="56" rx="14" fill="#596681"/><text x="171" y="714" text-anchor="middle" class="cn bt">Gaussian ε</text>
+  <rect x="344" y="680" width="190" height="56" rx="14" fill="#367fa8"/><text x="439" y="704" text-anchor="middle" class="cn bt">ODE rollout</text><text x="439" y="724" text-anchor="middle" class="cn bs">真实生成轨迹</text>
+  <rect x="624" y="680" width="190" height="56" rx="14" fill="#8b5bd2"/><text x="719" y="704" text-anchor="middle" class="cn bt">t=1 Predictor</text><text x="719" y="724" text-anchor="middle" class="cn bs">默认没直接训练这个输入域</text>
+  <rect x="904" y="680" width="210" height="56" rx="14" fill="#aa527b"/><text x="1009" y="704" text-anchor="middle" class="cn bt">Decoder landing basin</text><text x="1009" y="724" text-anchor="middle" class="cn bs">能否稳定读成 token？</text>
+  <path d="M256 708H334" class="arrow"/><path d="M534 708H614" class="danger"/><path d="M814 708H894" class="arrow"/>
+  <rect x="552" y="625" width="186" height="28" rx="14" fill="#ffb4c0"/><text x="645" y="644" text-anchor="middle" class="cn tag">当前最该关闭的 gap</text>
+  <text x="50" y="796" class="cn note">创新候选：让 late-Flow / ODE-like endpoint 进入 readout 训练，并证明它扩大的是正确 Decoder basin，而不是训练 corruption 的私有捷径。</text>
+</svg>
