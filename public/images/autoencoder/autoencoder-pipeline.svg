@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Autoencoder 的基本数据流</title>
+  <desc id="desc">输入图像经过 Encoder 压缩成一小组数字，再由 Decoder 尽量还原，训练依靠比较原图和还原图的差异。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f3ea"/>
+      <stop offset="1" stop-color="#eaf0ec"/>
+    </linearGradient>
+    <linearGradient id="enc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5b7c99"/>
+      <stop offset="1" stop-color="#344f6a"/>
+    </linearGradient>
+    <linearGradient id="dec" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c07a55"/>
+      <stop offset="1" stop-color="#93533f"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#24313b" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#52636f"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="520" rx="28" fill="url(#bg)"/>
+
+  <g transform="translate(70 134)" filter="url(#shadow)">
+    <rect width="190" height="190" rx="24" fill="#fffdf8" stroke="#c9c1b4" stroke-width="3"/>
+    <path d="M22 135 L65 88 L99 119 L134 64 L168 135 Z" fill="#9db1a6"/>
+    <circle cx="54" cy="48" r="16" fill="#d9aa6b"/>
+    <rect x="22" y="153" width="146" height="12" rx="6" fill="#d9d1c3"/>
+  </g>
+  <text x="165" y="370" text-anchor="middle" font-size="28" font-family="Arial, PingFang SC, sans-serif" fill="#263642">输入 x</text>
+  <text x="165" y="405" text-anchor="middle" font-size="20" font-family="Arial, PingFang SC, sans-serif" fill="#687782">784 个像素</text>
+
+  <path d="M285 230 H365" fill="none" stroke="#52636f" stroke-width="5" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <path d="M390 120 H560 L515 340 H435 Z" fill="url(#enc)"/>
+    <text x="475" y="215" text-anchor="middle" font-size="30" font-weight="700" font-family="Arial, PingFang SC, sans-serif" fill="#fff">Encoder</text>
+    <text x="475" y="252" text-anchor="middle" font-size="19" font-family="Arial, PingFang SC, sans-serif" fill="#e8eef3">提取 / 压缩</text>
+  </g>
+
+  <path d="M550 230 H615" fill="none" stroke="#52636f" stroke-width="5" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="635" y="180" width="96" height="100" rx="28" fill="#f0c96d" stroke="#b28a35" stroke-width="3"/>
+    <circle cx="664" cy="230" r="9" fill="#7d5b21"/>
+    <circle cx="702" cy="230" r="9" fill="#7d5b21"/>
+  </g>
+  <text x="683" y="332" text-anchor="middle" font-size="27" font-family="Arial, PingFang SC, sans-serif" fill="#263642">中间表示 z</text>
+  <text x="683" y="366" text-anchor="middle" font-size="20" font-family="Arial, PingFang SC, sans-serif" fill="#687782">例如只留 2 个数</text>
+
+  <path d="M751 230 H815" fill="none" stroke="#52636f" stroke-width="5" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <path d="M840 120 H1010 L965 340 H885 Z" fill="url(#dec)" transform="rotate(180 925 230)"/>
+    <text x="925" y="215" text-anchor="middle" font-size="30" font-weight="700" font-family="Arial, PingFang SC, sans-serif" fill="#fff">Decoder</text>
+    <text x="925" y="252" text-anchor="middle" font-size="19" font-family="Arial, PingFang SC, sans-serif" fill="#f8ece7">尝试还原</text>
+  </g>
+
+  <path d="M1000 230 H1070" fill="none" stroke="#52636f" stroke-width="5" marker-end="url(#arrow)"/>
+
+  <g transform="translate(1090 175) scale(.53)" filter="url(#shadow)">
+    <rect width="190" height="190" rx="24" fill="#fffdf8" stroke="#c9c1b4" stroke-width="5"/>
+    <path d="M22 135 L65 88 L99 119 L134 64 L168 135 Z" fill="#a8b4ad"/>
+    <circle cx="54" cy="48" r="16" fill="#d1ad7b"/>
+    <rect x="22" y="153" width="146" height="12" rx="6" fill="#d9d1c3"/>
+  </g>
+  <text x="1140" y="315" text-anchor="middle" font-size="25" font-family="Arial, PingFang SC, sans-serif" fill="#263642">还原图 x̂</text>
+
+  <path d="M1140 405 C1140 475 165 475 165 420" fill="none" stroke="#a45544" stroke-width="4" stroke-dasharray="10 9" marker-end="url(#arrow)"/>
+  <text x="655" y="492" text-anchor="middle" font-size="23" font-family="Arial, PingFang SC, sans-serif" fill="#8d4f41">比较 x 和 x̂ 的差距，再反向调整整个网络</text>
+</svg>

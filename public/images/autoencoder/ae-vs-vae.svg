@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">普通 Autoencoder 与 VAE 的差别</title>
+  <desc id="desc">普通 Autoencoder 把每个输入放到一个确定点，VAE 为每个输入学一片可采样区域，同时把整个空间收拢到容易采样的范围。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f3ea"/>
+      <stop offset="1" stop-color="#edf1ee"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#263642" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="600" rx="28" fill="url(#bg)"/>
+  <text x="300" y="70" text-anchor="middle" font-size="34" font-weight="700" font-family="Arial, PingFang SC, sans-serif" fill="#29445c">普通 Autoencoder</text>
+  <text x="900" y="70" text-anchor="middle" font-size="34" font-weight="700" font-family="Arial, PingFang SC, sans-serif" fill="#8f543d">VAE</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="110" width="460" height="370" rx="24" fill="#fffdf8" stroke="#d5cdc0" stroke-width="3"/>
+    <rect x="670" y="110" width="460" height="370" rx="24" fill="#fffdf8" stroke="#d5cdc0" stroke-width="3"/>
+  </g>
+
+  <g fill="none" stroke="#d9dedb" stroke-width="2">
+    <path d="M115 205 H485 M115 295 H485 M115 385 H485"/>
+    <path d="M205 145 V445 M300 145 V445 M395 145 V445"/>
+    <path d="M715 205 H1085 M715 295 H1085 M715 385 H1085"/>
+    <path d="M805 145 V445 M900 145 V445 M995 145 V445"/>
+  </g>
+
+  <g stroke="#fff" stroke-width="4">
+    <circle cx="175" cy="190" r="18" fill="#5b7c99"/>
+    <circle cx="428" cy="176" r="18" fill="#c07a55"/>
+    <circle cx="348" cy="398" r="18" fill="#7e9b78"/>
+  </g>
+  <g font-family="Arial, PingFang SC, sans-serif" font-size="20" fill="#687782">
+    <text x="175" y="235" text-anchor="middle">鞋</text>
+    <text x="428" y="221" text-anchor="middle">上衣</text>
+    <text x="348" y="443" text-anchor="middle">包</text>
+  </g>
+
+  <g opacity="0.34">
+    <circle cx="775" cy="205" r="54" fill="#5b7c99"/>
+    <circle cx="1005" cy="190" r="58" fill="#c07a55"/>
+    <circle cx="900" cy="375" r="62" fill="#7e9b78"/>
+  </g>
+  <g stroke="#fff" stroke-width="4">
+    <circle cx="775" cy="205" r="14" fill="#5b7c99"/>
+    <circle cx="1005" cy="190" r="14" fill="#c07a55"/>
+    <circle cx="900" cy="375" r="14" fill="#7e9b78"/>
+  </g>
+  <ellipse cx="900" cy="292" rx="180" ry="150" fill="none" stroke="#a88437" stroke-width="4" stroke-dasharray="12 10"/>
+  <g font-family="Arial, PingFang SC, sans-serif" font-size="20" fill="#687782">
+    <text x="775" y="285" text-anchor="middle">鞋附近的一片区域</text>
+    <text x="1005" y="270" text-anchor="middle">上衣附近的一片区域</text>
+  </g>
+
+  <text x="300" y="530" text-anchor="middle" font-size="24" font-family="Arial, PingFang SC, sans-serif" fill="#354854">每张图对应一个确定坐标</text>
+  <text x="900" y="520" text-anchor="middle" font-size="24" font-family="Arial, PingFang SC, sans-serif" fill="#354854">每张图对应一个分布</text>
+  <text x="900" y="554" text-anchor="middle" font-size="20" font-family="Arial, PingFang SC, sans-serif" fill="#687782">还要尽量让整张地图连续、少留空洞</text>
+</svg>

@@ -17,6 +17,8 @@ draft: false
 
 最近这个方向有一种很典型的科研体验：论文一篇接一篇地冒出来，名字也一个比一个猛。AURORA-LM、LTF、ELF、Cola-DLM、TextLDM、FlowMapLM……每篇都像在另起炉灶。读到第五篇时，人已经开始怀疑自己：这真的是同一个领域吗？
 
+> 如果你还不熟悉 Encoder、Decoder 和 latent space，可以先读[《Autoencoder 到底在做什么？》](/posts/autoencoder-explained/)。那篇用一个 Fashion-MNIST VAE 小项目把这三个词从头讲开，这篇默认你已经知道 Autoencoder 的基本数据流。
+
 我把九个模型的原文摊开，硬塞进同一张表以后，反而发现了一件特别好玩的事：**它们基本都在搬同一块石头，只是选择把石头扔给不同的模块。**
 
 - 有人说：先把 latent 压得又短又顺，生成器自然就轻松了。
