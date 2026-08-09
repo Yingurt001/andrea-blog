@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">JEPA-CDLM 的训练和推理路径</title>
+  <desc id="desc">训练默认由受损 online latent 进入 t=1 predictor，推理由 ODE terminal 进入同一个 predictor，因此当前存在输入分布需要验证的问题。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1430"/><stop offset="1" stop-color="#1b103b"/></linearGradient>
+    <linearGradient id="z" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7668ed"/><stop offset="1" stop-color="#32bfd3"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#bbc5ed"/></marker>
+    <style>.cn{font-family:"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}.title{font-size:34px;font-weight:750;fill:#fff}.sub{font-size:17px;fill:#aeb9df}.lane{font-size:21px;font-weight:700;fill:#f5f7ff}.bt{font-size:18px;font-weight:700;fill:#fff}.bs{font-size:14px;fill:#d8def7}.note{font-size:14px;fill:#bfc8ec}.tag{font-size:14px;font-weight:700;fill:#1a1730}.arr{stroke:#bbc5ed;stroke-width:3;fill:none;marker-end:url(#arr)}.danger{stroke:#ff8cac;stroke-width:3;fill:none;stroke-dasharray:8 7}</style>
+  </defs>
+  <rect width="1400" height="760" rx="30" fill="url(#bg)"/>
+  <text x="54" y="58" class="cn title">训练和推理最终都会经过 t=1 Predictor，但输入来源不同</text>
+  <text x="54" y="91" class="cn sub">这不是已经解决的问题。当前默认配置仍需要通过 matched support 实验验证 readout 是否适配 ODE terminal。</text>
+
+  <rect x="50" y="126" width="1300" height="220" rx="24" fill="#fff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".45"/>
+  <text x="76" y="165" class="cn lane">训练默认：decode_from_flow_prediction=false</text>
+  <rect x="90" y="204" width="208" height="76" rx="17" fill="#6659cb"/><text x="194" y="235" text-anchor="middle" class="cn bt">Online TextAE</text><text x="194" y="259" text-anchor="middle" class="cn bs">受损 target → z_corrupt</text>
+  <rect x="390" y="204" width="224" height="76" rx="17" fill="#8b5bd2"/><text x="502" y="235" text-anchor="middle" class="cn bt">t=1 Predictor</text><text x="502" y="259" text-anchor="middle" class="cn bs">训练输入：z_corrupt</text>
+  <rect x="706" y="204" width="210" height="76" rx="17" fill="url(#z)"/><text x="811" y="235" text-anchor="middle" class="cn bt">z_JEPA</text><text x="811" y="259" text-anchor="middle" class="cn bs">对齐 clean teacher z*</text>
+  <rect x="1008" y="204" width="250" height="76" rx="17" fill="#aa527b"/><text x="1133" y="235" text-anchor="middle" class="cn bt">Decoder + unembed</text><text x="1133" y="259" text-anchor="middle" class="cn bs">feature MSE + token CE</text>
+  <path d="M298 242H376" class="arr"/><path d="M614 242H692" class="arr"/><path d="M916 242H994" class="arr"/>
+
+  <rect x="50" y="372" width="1300" height="220" rx="24" fill="#fff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".45"/>
+  <text x="76" y="411" class="cn lane">推理：没有真实 target，也没有 EMA teacher</text>
+  <rect x="90" y="450" width="208" height="76" rx="17" fill="#596681"/><text x="194" y="481" text-anchor="middle" class="cn bt">Gaussian noise</text><text x="194" y="505" text-anchor="middle" class="cn bs">target slots at t=0</text>
+  <rect x="390" y="450" width="224" height="76" rx="17" fill="#367fa8"/><text x="502" y="481" text-anchor="middle" class="cn bt">ODE rollout</text><text x="502" y="505" text-anchor="middle" class="cn bs">Flow head → z_ODE</text>
+  <rect x="706" y="450" width="210" height="76" rx="17" fill="#8b5bd2"/><text x="811" y="481" text-anchor="middle" class="cn bt">t=1 Predictor</text><text x="811" y="505" text-anchor="middle" class="cn bs">推理输入：z_ODE</text>
+  <rect x="1008" y="450" width="250" height="76" rx="17" fill="#aa527b"/><text x="1133" y="481" text-anchor="middle" class="cn bt">Decoder + unembed</text><text x="1133" y="505" text-anchor="middle" class="cn bs">并行输出 token</text>
+  <path d="M298 488H376" class="arr"/><path d="M614 488H692" class="arr"/><path d="M916 488H994" class="arr"/>
+
+  <path d="M502 280V372" class="danger"/><path d="M811 280V372" class="danger"/>
+  <rect x="394" y="610" width="614" height="78" rx="20" fill="#3b1d3c" stroke="#ff8cac" stroke-opacity=".8"/>
+  <text x="701" y="642" text-anchor="middle" class="cn bt">需要验证：z_corrupt 和 z_ODE 是否落在相同的 Decoder-readable support</text>
+  <text x="701" y="669" text-anchor="middle" class="cn bs">late-Flow mix 是候选实验，不是当前已经证明的贡献。</text>
+  <rect x="1040" y="627" width="208" height="34" rx="17" fill="#ffb4c0"/><text x="1144" y="650" text-anchor="middle" class="cn tag">当前项目的重要问题</text>
+</svg>

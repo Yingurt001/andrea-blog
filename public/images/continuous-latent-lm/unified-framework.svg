@@ -28,12 +28,12 @@
     </style>
   </defs>
   <rect width="1200" height="620" rx="30" fill="url(#bg)"/>
-  <text x="54" y="58" class="cn title">别被模型名吓到：大家都在改同一条流水线</text>
-  <text x="54" y="87" class="cn sub">真正的分歧不是“有没有 Encoder / Denoiser / Decoder”，而是谁负责把 latent 变得可生成、可解码。</text>
+  <text x="54" y="58" class="cn title">统一视图：Encoder、Denoiser 和 Decoder 如何共同生成文本</text>
+  <text x="54" y="87" class="cn sub">不同模型的主要区别，是由哪个模块负责让 latent 变得可生成、可解码。</text>
 
   <rect x="42" y="122" width="1116" height="204" rx="24" fill="#ffffff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".35"/>
   <rect x="42" y="352" width="1116" height="204" rx="24" fill="#ffffff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".35"/>
-  <text x="68" y="158" class="cn lane">① 先造一块好用的 latent 空间</text>
+  <text x="68" y="158" class="cn lane">① 先训练 Autoencoder，得到 latent 表示</text>
   <text x="68" y="388" class="cn lane">② 再学会从噪声生成 latent</text>
 
   <g filter="url(#shadow)">
@@ -48,7 +48,7 @@
     <rect x="570" y="176" width="192" height="114" rx="22" fill="url(#latent)"/>
     <text x="666" y="220" text-anchor="middle" class="cn box-title">干净 latent  z₀</text>
     <text x="666" y="246" text-anchor="middle" class="cn box-sub">生成器要学它，Decoder 要读它</text>
-    <text x="666" y="270" text-anchor="middle" class="cn box-sub">这里就是整篇文章的“合同”</text>
+    <text x="666" y="270" text-anchor="middle" class="cn box-sub">表示、生成与解码的共享接口</text>
 
     <rect x="842" y="190" width="170" height="86" rx="18" fill="#5968d9"/>
     <text x="927" y="226" text-anchor="middle" class="cn box-title">Decoder</text>

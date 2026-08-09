@@ -11,15 +11,15 @@
     </style>
   </defs>
   <rect width="1200" height="820" rx="30" fill="url(#bg)"/>
-  <text x="50" y="58" class="cn title">我们真正想做的：让表示、生成和读回签同一份 latent 合同</text>
+  <text x="50" y="58" class="cn title">JEPA-CDLM：统一表示学习、Flow 生成与 Decoder 读回的 latent endpoint</text>
   <text x="50" y="88" class="cn sub">当前 JEPA-AE 已经把三条训练支路接在一起，但默认 readout 仍没直接见到真实 ODE terminal。</text>
 
   <rect x="50" y="124" width="1100" height="178" rx="22" fill="#fff" fill-opacity=".045" stroke="#6573ad" stroke-opacity=".45"/>
-  <text x="72" y="158" class="cn lane">表示：冻结语义地基，学习 4× 压缩 latent</text>
+  <text x="72" y="158" class="cn lane">表示：冻结 T5 features，学习 4× 压缩 latent</text>
   <rect x="82" y="190" width="156" height="76" rx="16" fill="#596681"/><text x="160" y="220" text-anchor="middle" class="cn bt">冻结 T5</text><text x="160" y="244" text-anchor="middle" class="cn bs">128×512 features</text>
   <rect x="320" y="182" width="228" height="92" rx="18" fill="#6659cb"/><text x="434" y="216" text-anchor="middle" class="cn bt">Online TextVAE</text><text x="434" y="240" text-anchor="middle" class="cn bs">target 加噪；4 token → 1 slot</text><text x="434" y="261" text-anchor="middle" class="cn bs">128 token → 32 slots</text>
   <rect x="650" y="182" width="228" height="92" rx="18" fill="#68588e"/><text x="764" y="216" text-anchor="middle" class="cn bt">EMA TextVAE</text><text x="764" y="240" text-anchor="middle" class="cn bs">读 clean features</text><text x="764" y="261" text-anchor="middle" class="cn bs">stop-grad teacher</text>
-  <rect x="972" y="190" width="146" height="76" rx="16" fill="url(#z)"/><text x="1045" y="220" text-anchor="middle" class="cn bt">z* clean</text><text x="1045" y="244" text-anchor="middle" class="cn bs">共同目标端点</text>
+  <rect x="972" y="190" width="146" height="76" rx="16" fill="url(#z)"/><text x="1045" y="220" text-anchor="middle" class="cn bt">z* clean</text><text x="1045" y="244" text-anchor="middle" class="cn bs">共享 target</text>
   <path d="M238 228H272" stroke="#b5c0eb" stroke-width="3" fill="none"/>
   <circle cx="280" cy="228" r="6" fill="#b5c0eb"/>
   <path d="M288 228H310" class="arrow"/>
@@ -49,5 +49,5 @@
   <rect x="904" y="680" width="210" height="56" rx="14" fill="#aa527b"/><text x="1009" y="704" text-anchor="middle" class="cn bt">Decoder landing basin</text><text x="1009" y="724" text-anchor="middle" class="cn bs">能否稳定读成 token？</text>
   <path d="M256 708H334" class="arrow"/><path d="M534 708H614" class="danger"/><path d="M814 708H894" class="arrow"/>
   <rect x="552" y="625" width="186" height="28" rx="14" fill="#ffb4c0"/><text x="645" y="644" text-anchor="middle" class="cn tag">当前最该关闭的 gap</text>
-  <text x="50" y="796" class="cn note">创新候选：让 late-Flow / ODE-like endpoint 进入 readout 训练，并证明它扩大的是正确 Decoder basin，而不是训练 corruption 的私有捷径。</text>
+  <text x="50" y="796" class="cn note">创新候选：让 late-Flow / ODE-like endpoint 进入 readout 训练，并验证它改善 ODE endpoint 的 Decoder 可读性，而不只适配 corruption support。</text>
 </svg>

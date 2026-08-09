@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941" role="img" aria-labelledby="title desc">
+  <title id="title">JEPA-CDLM 模型介绍封面</title>
+  <desc id="desc">展示冻结 T5、TextAE、JEPA predictor、Flow Matching 和 Decoder 的三条数据流。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08122d"/><stop offset="1" stop-color="#261044"/></linearGradient>
+    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7167ef"/><stop offset="1" stop-color="#31c1d4"/></linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#8b58d2"/><stop offset="1" stop-color="#db668e"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#020617" flood-opacity=".42"/></filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#bcc7f1"/></marker>
+    <style>.cn{font-family:"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif}.title{font-size:66px;font-weight:750;fill:#fff}.sub{font-size:26px;fill:#bac5ec}.tag{font-size:21px;font-weight:700;fill:#10162f}.bt{font-size:25px;font-weight:700;fill:#fff}.bs{font-size:19px;fill:#d9e0fa}.arr{stroke:#bcc7f1;stroke-width:4;fill:none;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1672" height="941" rx="42" fill="url(#bg)"/>
+  <circle cx="1470" cy="120" r="230" fill="#7658e8" opacity=".10"/><circle cx="160" cy="820" r="280" fill="#28b7ca" opacity=".08"/>
+  <text x="92" y="130" class="cn title">JEPA-CDLM 到底在做什么？</text>
+  <text x="94" y="184" class="cn sub">从 JEPA 分支、Flow Matching 到完整的连续潜空间语言模型</text>
+
+  <g filter="url(#shadow)">
+    <rect x="94" y="294" width="250" height="112" rx="24" fill="#596681"/>
+    <text x="219" y="340" text-anchor="middle" class="cn bt">冻结 T5-small</text><text x="219" y="374" text-anchor="middle" class="cn bs">token → contextual features</text>
+    <rect x="438" y="294" width="250" height="112" rx="24" fill="#6458cb"/>
+    <text x="563" y="340" text-anchor="middle" class="cn bt">Online TextAE</text><text x="563" y="374" text-anchor="middle" class="cn bs">target corruption + 4× 压缩</text>
+    <rect x="782" y="294" width="270" height="112" rx="24" fill="url(#pink)"/>
+    <text x="917" y="340" text-anchor="middle" class="cn bt">JEPA Predictor</text><text x="917" y="374" text-anchor="middle" class="cn bs">预测 clean target latent</text>
+    <rect x="1146" y="294" width="210" height="112" rx="24" fill="#aa527b"/>
+    <text x="1251" y="340" text-anchor="middle" class="cn bt">Decoder</text><text x="1251" y="374" text-anchor="middle" class="cn bs">并行读回 token</text>
+    <path d="M344 350H424" class="arr"/><path d="M688 350H768" class="arr"/><path d="M1052 350H1132" class="arr"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="438" y="498" width="250" height="108" rx="24" fill="#68588e"/>
+    <text x="563" y="542" text-anchor="middle" class="cn bt">EMA compressor</text><text x="563" y="576" text-anchor="middle" class="cn bs">clean feature → stop-grad z*</text>
+    <rect x="782" y="498" width="270" height="108" rx="24" fill="url(#cyan)"/>
+    <text x="917" y="542" text-anchor="middle" class="cn bt">Flow Matching</text><text x="917" y="576" text-anchor="middle" class="cn bs">Gaussian noise → clean latent</text>
+    <path d="M688 552H768" class="arr"/>
+  </g>
+
+  <path d="M219 406V552H424" class="arr" opacity=".8"/>
+  <path d="M688 514 C742 452 790 430 846 412" class="arr" stroke-dasharray="10 9"/>
+  <path d="M917 498V420" class="arr" stroke-dasharray="10 9"/>
+
+  <rect x="94" y="718" width="1468" height="112" rx="28" fill="#fff" fill-opacity=".06" stroke="#7f8ac0" stroke-opacity=".45"/>
+  <text x="126" y="765" class="cn bt">一个目标，两个预测问题</text>
+  <text x="126" y="803" class="cn sub">JEPA 学习从受损表示恢复 clean latent；Flow 学习从纯噪声生成同一个 latent。</text>
+  <rect x="1340" y="746" width="176" height="44" rx="22" fill="#8eead5"/><text x="1428" y="775" text-anchor="middle" class="cn tag">新手友好版</text>
+</svg>
