@@ -392,6 +392,14 @@ const diaryData: DiaryItem[] = [
 		mood: "🥳",
 		tags: ["开心", "升级"],
 	},
+	{
+		id: 48,
+		content:
+			"修改这个Dashboard真的花了我好长时间，不过总算修好了！",
+		date: "2026-08-11T03:50:27Z",
+		mood: "🤯",
+		tags: ["Life"],
+	},
 ];
 
 // 获取日记列表（按时间倒序）
