@@ -12,11 +12,11 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 5,
-  "totalSessions": 1,
+  "totalMinutes": 156,
+  "totalSessions": 6,
   "activeDays": 1,
   "days": {
-    "2026-09-04": 5
+    "2026-09-04": 156
   },
-  "updatedAt": "2026-09-04T05:30:19.875Z"
+  "updatedAt": "2026-09-04T14:38:09.091Z"
 };
