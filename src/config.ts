@@ -48,6 +48,7 @@ export const siteConfig: SiteConfig = {
 		timeline: true, // 时间线页面开关
 		albums: true, // 相册页面开关
 		devices: false, // 设备页面开关
+		focus: false, // 专注统计页面开关（默认关闭，数据看着顺眼了再自己打开）
 	},
 
 	// 顶栏标题配置
