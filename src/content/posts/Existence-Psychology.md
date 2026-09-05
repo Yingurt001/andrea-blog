@@ -1,10 +1,12 @@
 ---
-title: "我和存在主义心理治疗"
+title: 我和存在主义心理治疗
 published: 2026-08-29
 description: ""
-tags: ["心理", "生活"]
-category: "生活"
-draft: true
+tags:
+  - 心理
+  - 生活
+category: 生活
+draft: false
 ---
 我想到这个课题是因为我最近在阅读的这一本书《存在主义心理治疗》
 
