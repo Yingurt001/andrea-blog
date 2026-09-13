@@ -5,7 +5,12 @@
 export interface HeatCell {
 	date: string;
 	minutes: number;
+	/** 当天各项目的分钟数，按多到少排好序。数据源已脱敏，这里拿到的就能直接显示。 */
+	projects: [string, number][];
 }
+
+/** "YYYY-MM-DD" -> 项目名 -> 分钟数 */
+export type DayProjects = Record<string, Record<string, number>>;
 
 export interface Heatmap {
 	cells: HeatCell[];
@@ -30,6 +35,7 @@ const keyOf = (d: Date) =>
 export function buildHeatmap(
 	days: Record<string, number>,
 	weeks: number,
+	dayProjects: DayProjects = {},
 ): Heatmap {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
@@ -42,7 +48,15 @@ export function buildHeatmap(
 	for (let i = 0; i < weeks * 7; i++) {
 		const d = new Date(start);
 		d.setDate(d.getDate() + i);
-		cells.push({ date: keyOf(d), minutes: days[keyOf(d)] ?? 0 });
+		const k = keyOf(d);
+		// dayProjects 默认空对象：同步脚本更新前的旧快照没有这个字段，
+		// 那种情况下 tooltip 退化成「日期 + 总时长」，不至于整页报错。
+		const byProject = dayProjects[k] ?? {};
+		cells.push({
+			date: k,
+			minutes: days[k] ?? 0,
+			projects: Object.entries(byProject).sort((a, b) => b[1] - a[1]),
+		});
 	}
 
 	const monthLabels: { col: number; label: string }[] = [];
@@ -76,4 +90,36 @@ export function cellStyle(level: number): string {
 	return level === 0
 		? "background:var(--btn-regular-bg)"
 		: `background:var(--primary);opacity:${LEVEL_OPACITY[level]}`;
+}
+
+const WEEKDAY = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+
+/** 398 -> "6 小时 38 分"；不足一小时只给分钟，免得满屏「0 小时 x 分」。 */
+export function fmtDuration(minutes: number): string {
+	const h = Math.floor(minutes / 60);
+	const m = minutes % 60;
+	if (!h) return `${m} 分钟`;
+	return m ? `${h} 小时 ${m} 分` : `${h} 小时`;
+}
+
+/**
+ * 组装 tooltip 的文字。整页和侧栏共用，在构建时算好塞进格子的 data-tip，
+ * 浏览器端只负责定位显示。返回值里的 \n 由 .focus-tip 的 white-space:pre-line 断行。
+ */
+export function formatTooltip(cell: HeatCell): string {
+	const [y, m, d] = cell.date.split("-").map(Number);
+	const head = `${m}月${d}日 ${WEEKDAY[new Date(y, m - 1, d).getDay()]}`;
+	if (!cell.minutes) return `${head} · 没有记录`;
+
+	// cell.projects 已按分钟从多到少排好，形如 [["GyroBN", 302], ["创业", 93]]。
+	// 旧快照没有项目分解时这里是空数组，自然退回到只显示总时长。
+	//
+	// 全列，不截断也不滤掉几分钟的零头：少列一项，这几行之和就不等于首行的总时长，
+	// 而那个对不上会让人怀疑整份数据，不是怀疑 tooltip 少显示了。一天最多 4 个项目，
+	// 全列也就 5 行。
+	const lines = cell.projects.map(
+		([name, minutes]) => `${name} ${fmtDuration(minutes)}`,
+	);
+
+	return [`${head} · ${fmtDuration(cell.minutes)}`, ...lines].join("\n");
 }

@@ -4,9 +4,9 @@ import {
 	LEVEL_OPACITY,
 	buildHeatmap,
 	cellStyle,
-	levelOf,
 } from "../../../utils/focus-heatmap";
 import WidgetLayout from "../common/WidgetLayout.astro";
+import FocusHeatmap from "./FocusHeatmap.astro";
 
 interface Props {
 	class?: string;
@@ -19,8 +19,8 @@ const { class: className, style } = Astro.props;
 // 每格还有 17px 左右。要看全量点标题进 /focus。
 const WEEKS = 14;
 
-const { totalMinutes, totalSessions, activeDays, days } = focusStats;
-const { cells, maxMinutes } = buildHeatmap(days, WEEKS);
+const { totalMinutes, totalSessions, activeDays, days, dayProjects } = focusStats;
+const { cells, maxMinutes } = buildHeatmap(days, WEEKS, dayProjects);
 const totalHours = (totalMinutes / 60).toFixed(1);
 ---
 
@@ -44,18 +44,7 @@ const totalHours = (totalMinutes / 60).toFixed(1);
 					</span>
 				</div>
 
-				<div
-					class="grid grid-flow-col gap-[2px]"
-					style={`grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(${WEEKS},1fr)`}
-				>
-					{cells.map((c) => (
-						<div
-							class="aspect-square rounded-[2px]"
-							style={cellStyle(levelOf(c.minutes, maxMinutes))}
-							title={`${c.date} · ${c.minutes} 分钟`}
-						/>
-					))}
-				</div>
+				<FocusHeatmap cells={cells} maxMinutes={maxMinutes} weeks={WEEKS} gap="2px" />
 
 				<div class="flex items-center gap-1 mt-2.5 text-[10px] text-neutral-400 dark:text-neutral-500">
 					<span>少</span>

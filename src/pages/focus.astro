@@ -1,12 +1,12 @@
 ---
 import { siteConfig } from "../config";
 import { focusStats } from "../data/focus-stats";
+import FocusHeatmap from "../components/widgets/focus/FocusHeatmap.astro";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 import {
 	LEVEL_OPACITY,
 	buildHeatmap,
 	cellStyle,
-	levelOf,
 } from "../utils/focus-heatmap";
 
 export const prerender = true;
@@ -15,13 +15,14 @@ if (!siteConfig.featurePages.focus) {
 	return Astro.redirect("/404/");
 }
 
-const { totalMinutes, totalSessions, activeDays, days, updatedAt } = focusStats;
+const { totalMinutes, totalSessions, activeDays, days, dayProjects, updatedAt } =
+	focusStats;
 const totalHours = (totalMinutes / 60).toFixed(1);
 
 // 26 周版；侧栏那个 widget 是同一套算法的 14 周版，共用 utils/focus-heatmap
 // 免得两处各算各的，同一天在两边显示成不同深浅。
 const WEEKS = 26;
-const { cells, maxMinutes, monthLabels } = buildHeatmap(days, WEEKS);
+const { cells, maxMinutes, monthLabels } = buildHeatmap(days, WEEKS, dayProjects);
 
 const updatedLabel = updatedAt
 	? new Date(updatedAt).toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" })
@@ -59,25 +60,7 @@ const updatedLabel = updatedAt
 
 			<div class="overflow-x-auto pb-2">
 				<div class="min-w-[560px]">
-					<div class="grid gap-[3px] mb-1 relative h-4" style={`grid-template-columns:repeat(${WEEKS},1fr)`}>
-						{monthLabels.map((m) => (
-							<span
-								class="text-[10px] text-black/40 dark:text-white/40 absolute"
-								style={`left:calc(${m.col} / ${WEEKS} * 100%)`}
-							>
-								{m.label}
-							</span>
-						))}
-					</div>
-					<div class="grid grid-flow-col gap-[3px]" style={`grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(${WEEKS},1fr)`}>
-						{cells.map((c) => (
-							<div
-								class="aspect-square rounded-[2px]"
-								style={cellStyle(levelOf(c.minutes, maxMinutes))}
-								title={`${c.date} · ${c.minutes} 分钟`}
-							/>
-						))}
-					</div>
+					<FocusHeatmap cells={cells} maxMinutes={maxMinutes} weeks={WEEKS} monthLabels={monthLabels} />
 				</div>
 			</div>
 
