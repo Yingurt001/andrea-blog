@@ -13,8 +13,8 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 3028,
-  "totalSessions": 41,
+  "totalMinutes": 3333,
+  "totalSessions": 43,
   "activeDays": 9,
   "days": {
     "2026-09-04": 156,
@@ -25,7 +25,7 @@ export const focusStats: FocusStats = {
     "2026-09-10": 480,
     "2026-09-11": 49,
     "2026-09-12": 577,
-    "2026-09-13": 93
+    "2026-09-13": 398
   },
-  "updatedAt": "2026-09-13T04:28:57.531Z"
+  "updatedAt": "2026-09-13T15:40:09.238Z"
 };
