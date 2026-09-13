@@ -2,6 +2,7 @@
 // 由 Obsidian 私有笔记 `_dashboard/editor/focus.md` 的「📤 同步到博客公开统计页」按钮
 // 覆盖写入，不要手动改这个文件的数值——改了下次同步会被覆盖。
 // 只导出「每天总时长」，不带项目名（求职/IELTS 之类偏私人，默认不公开）。
+// 跨日的专注按自然日拆开分摊，跟笔记里的统计口径一致。
 
 export interface FocusStats {
 	totalMinutes: number;
@@ -12,9 +13,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 2358,
-  "totalSessions": 34,
-  "activeDays": 7,
+  "totalMinutes": 3028,
+  "totalSessions": 41,
+  "activeDays": 9,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -22,7 +23,9 @@ export const focusStats: FocusStats = {
     "2026-09-08": 234,
     "2026-09-09": 655,
     "2026-09-10": 480,
-    "2026-09-11": 49
+    "2026-09-11": 49,
+    "2026-09-12": 577,
+    "2026-09-13": 93
   },
-  "updatedAt": "2026-09-11T15:37:03.079Z"
+  "updatedAt": "2026-09-13T04:28:57.531Z"
 };
