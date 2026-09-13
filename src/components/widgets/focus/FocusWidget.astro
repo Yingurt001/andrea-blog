@@ -1,0 +1,76 @@
+---
+import { focusStats } from "../../../data/focus-stats";
+import {
+	LEVEL_OPACITY,
+	buildHeatmap,
+	cellStyle,
+	levelOf,
+} from "../../../utils/focus-heatmap";
+import WidgetLayout from "../common/WidgetLayout.astro";
+
+interface Props {
+	class?: string;
+	style?: string;
+}
+
+const { class: className, style } = Astro.props;
+
+// 侧栏约 300px 宽，26 周会把格子压成 8px 的条读不出来；14 周约一个季度，
+// 每格还有 17px 左右。要看全量点标题进 /focus。
+const WEEKS = 14;
+
+const { totalMinutes, totalSessions, activeDays, days } = focusStats;
+const { cells, maxMinutes } = buildHeatmap(days, WEEKS);
+const totalHours = (totalMinutes / 60).toFixed(1);
+---
+
+<WidgetLayout name="专注" id="focus-widget" class={className} style={style}>
+	{
+		totalSessions === 0 ? (
+			<p class="text-sm text-neutral-500 dark:text-neutral-400 py-2">
+				还没有同步过数据
+			</p>
+		) : (
+			<a href="/focus/" class="block group" aria-label="查看完整专注统计">
+				<div class="flex items-baseline gap-1.5 mb-3">
+					<span class="text-2xl font-bold text-[var(--primary)]">
+						{totalHours}
+					</span>
+					<span class="text-sm text-neutral-500 dark:text-neutral-400">
+						小时
+					</span>
+					<span class="ml-auto text-xs text-neutral-500 dark:text-neutral-400">
+						{totalSessions} 次 · {activeDays} 天
+					</span>
+				</div>
+
+				<div
+					class="grid grid-flow-col gap-[2px]"
+					style={`grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(${WEEKS},1fr)`}
+				>
+					{cells.map((c) => (
+						<div
+							class="aspect-square rounded-[2px]"
+							style={cellStyle(levelOf(c.minutes, maxMinutes))}
+							title={`${c.date} · ${c.minutes} 分钟`}
+						/>
+					))}
+				</div>
+
+				<div class="flex items-center gap-1 mt-2.5 text-[10px] text-neutral-400 dark:text-neutral-500">
+					<span>少</span>
+					{LEVEL_OPACITY.map((_, level) => (
+						<span
+							class="w-2 h-2 rounded-[2px] inline-block"
+							style={cellStyle(level)}
+						/>
+					))}
+					<span>多</span>
+					<span class="ml-auto transition group-hover:text-[var(--primary)]">
+						全部 →
+					</span>
+				</div>
+			</a>
+		)
+	}
+</WidgetLayout>

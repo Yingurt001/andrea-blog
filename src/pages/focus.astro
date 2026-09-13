@@ -2,6 +2,12 @@
 import { siteConfig } from "../config";
 import { focusStats } from "../data/focus-stats";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
+import {
+	LEVEL_OPACITY,
+	buildHeatmap,
+	cellStyle,
+	levelOf,
+} from "../utils/focus-heatmap";
 
 export const prerender = true;
 
@@ -12,48 +18,10 @@ if (!siteConfig.featurePages.focus) {
 const { totalMinutes, totalSessions, activeDays, days, updatedAt } = focusStats;
 const totalHours = (totalMinutes / 60).toFixed(1);
 
-// 拼一份「最近 26 周」的热力图格子：7 行(周日~周六) x 26 列(周)
+// 26 周版；侧栏那个 widget 是同一套算法的 14 周版，共用 utils/focus-heatmap
+// 免得两处各算各的，同一天在两边显示成不同深浅。
 const WEEKS = 26;
-const pad2 = (n: number) => String(n).padStart(2, "0");
-const keyOf = (d: Date) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-
-const today = new Date();
-today.setHours(0, 0, 0, 0);
-const endOfWeek = new Date(today);
-endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay())); // 补到本周六
-const startDate = new Date(endOfWeek);
-startDate.setDate(startDate.getDate() - WEEKS * 7 + 1);
-
-const cells: { date: string; minutes: number }[] = [];
-for (let i = 0; i < WEEKS * 7; i++) {
-	const d = new Date(startDate);
-	d.setDate(d.getDate() + i);
-	cells.push({ date: keyOf(d), minutes: days[keyOf(d)] ?? 0 });
-}
-const maxMinutes = Math.max(1, ...cells.map((c) => c.minutes));
-function levelOf(minutes: number) {
-	if (!minutes) return 0;
-	const ratio = minutes / maxMinutes;
-	if (ratio > 0.75) return 4;
-	if (ratio > 0.5) return 3;
-	if (ratio > 0.25) return 2;
-	return 1;
-}
-// --color-primary-rgb 在这套主题里其实没定义（唯一用到它的 devices.astro 页面本身是关着的，
-// 这个坑一直没暴露）。--primary 是 oklch()，rgba() 没法直接吃，所以用 opacity 属性做透明度分级，
-// 这样不管主题色是什么色彩空间都能用。level 0（没数据）走一个中性底色，跟其余等级区分开。
-const LEVEL_OPACITY = [0, 0.3, 0.55, 0.75, 1];
-
-const monthLabels: { col: number; label: string }[] = [];
-let lastMonth = -1;
-for (let w = 0; w < WEEKS; w++) {
-	const d = cells[w * 7].date;
-	const m = Number(d.slice(5, 7));
-	if (m !== lastMonth) {
-		monthLabels.push({ col: w, label: `${m}月` });
-		lastMonth = m;
-	}
-}
+const { cells, maxMinutes, monthLabels } = buildHeatmap(days, WEEKS);
 
 const updatedLabel = updatedAt
 	? new Date(updatedAt).toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" })
@@ -102,25 +70,21 @@ const updatedLabel = updatedAt
 						))}
 					</div>
 					<div class="grid grid-flow-col gap-[3px]" style={`grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(${WEEKS},1fr)`}>
-						{cells.map((c) => {
-							const level = levelOf(c.minutes);
-							const style =
-								level === 0
-									? "background:var(--btn-regular-bg)"
-									: `background:var(--primary);opacity:${LEVEL_OPACITY[level]}`;
-							return <div class="aspect-square rounded-[2px]" style={style} title={`${c.date} · ${c.minutes} 分钟`} />;
-						})}
+						{cells.map((c) => (
+							<div
+								class="aspect-square rounded-[2px]"
+								style={cellStyle(levelOf(c.minutes, maxMinutes))}
+								title={`${c.date} · ${c.minutes} 分钟`}
+							/>
+						))}
 					</div>
 				</div>
 			</div>
 
 			<div class="flex items-center gap-2 mt-4 text-xs text-black/40 dark:text-white/40">
 				<span>少</span>
-				{LEVEL_OPACITY.map((op, level) => (
-					<span
-						class="w-3 h-3 rounded-[2px] inline-block"
-						style={level === 0 ? "background:var(--btn-regular-bg)" : `background:var(--primary);opacity:${op}`}
-					/>
+				{LEVEL_OPACITY.map((_, level) => (
+					<span class="w-3 h-3 rounded-[2px] inline-block" style={cellStyle(level)} />
 				))}
 				<span>多</span>
 			</div>
