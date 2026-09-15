@@ -89,5 +89,5 @@ export const focusStats: FocusStats = {
       "其他": 20
     }
   },
-  "updatedAt": "2026-09-15T11:52:07.615Z"
+  "updatedAt": "2026-09-15T11:52:18.757Z"
 };
