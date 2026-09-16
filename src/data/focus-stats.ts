@@ -14,9 +14,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 4364,
-  "totalSessions": 53,
-  "activeDays": 11,
+  "totalMinutes": 4601,
+  "totalSessions": 56,
+  "activeDays": 12,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -28,7 +28,8 @@ export const focusStats: FocusStats = {
     "2026-09-12": 577,
     "2026-09-13": 398,
     "2026-09-14": 789,
-    "2026-09-15": 242
+    "2026-09-15": 425,
+    "2026-09-16": 54
   },
   "dayProjects": {
     "2026-09-04": {
@@ -85,9 +86,14 @@ export const focusStats: FocusStats = {
     },
     "2026-09-15": {
       "健身": 167,
+      "Vibe Coding": 125,
+      "GyroBN": 58,
       "学英语": 55,
       "其他": 20
+    },
+    "2026-09-16": {
+      "创业": 54
     }
   },
-  "updatedAt": "2026-09-15T11:52:18.757Z"
+  "updatedAt": "2026-09-16T02:28:56.417Z"
 };
