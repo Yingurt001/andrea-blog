@@ -39,7 +39,7 @@ export const projectsData: Project[] = [
 		id: "kan-credit-risk",
 		title: "KAN-GRU/LSTM 贷款违约预测",
 		description:
-			"GRU-KAN 和 LSTM-KAN 架构用于贷款违约早期检测（提前 3-8 个月），AUC 较 GRU baseline 提升 12%。论文投稿 Applied Soft Computing，CSCR 2024 接收。",
+			"用 Kolmogorov–Arnold Networks 改造 GRU 与 LSTM 做贷款违约早期预测，提前 3 个月准确率超过 92%、提前 8 个月超过 88%。合作项目，本人第三作者，论文被 Applied Soft Computing 2025 接收。",
 		image: "/assets/projects/kan-credit.jpg",
 		category: "other",
 		techStack: ["Python", "PyTorch", "KAN", "GRU", "LSTM"],
@@ -52,9 +52,9 @@ export const projectsData: Project[] = [
 	},
 	{
 		id: "t-bilstm",
-		title: "T-BiLSTM 贷后违约预测",
+		title: "ResE-BiLSTM 贷后违约检测",
 		description:
-			"Transformer-BiLSTM 架构处理 2000 万+ Freddie Mac 贷款记录，假阴性较 LSTM/GRU baseline 降低 15%。论文投稿 Information System Frontiers。",
+			"时序驱动的 ResE-BiLSTM 框架，在 Freddie Mac 房贷数据集 44 个独立 cohort 上与五个基线对比。合作项目，本人第三作者，论文被 CSCR III 2024 接收。",
 		image: "/assets/projects/t-bilstm.jpg",
 		category: "other",
 		techStack: ["Python", "PyTorch", "Transformer", "BiLSTM"],
@@ -84,7 +84,7 @@ export const projectsData: Project[] = [
 		id: "mcm-2025-juneau",
 		title: "MCM 2025 — 朱诺旅游优化",
 		description:
-			"Outstanding Prize。基于 NSGA-II 多目标优化朱诺旅游可持续发展，构建 SPEM 模型，推广至巴厘岛和圣芭芭拉。",
+			"Honorable Mention。基于 NSGA-II 多目标优化朱诺旅游可持续发展，构建 SPEM 模型，推广至巴厘岛和圣芭芭拉。",
 		image: "/assets/projects/mcm-juneau.jpg",
 		category: "other",
 		techStack: [
@@ -105,7 +105,7 @@ export const projectsData: Project[] = [
 		id: "mcm-2024-tennis",
 		title: "MCM 2024 — 网球动量预测",
 		description:
-			"Outstanding Prize。Markov Chain + LSTM 预测网球比赛 momentum，MCMC 模拟验证，交叉验证准确率 76.3%。",
+			"Successful Participant。Markov Chain + LSTM 预测网球比赛 momentum，MCMC 模拟验证，交叉验证准确率 76.3%。",
 		image: "/assets/projects/mcm-tennis.jpg",
 		category: "other",
 		techStack: ["Python", "LSTM", "Markov Chain", "MCMC"],
@@ -120,16 +120,15 @@ export const projectsData: Project[] = [
 		id: "apple-recognition",
 		title: "苹果智能检测系统",
 		description:
-			"基于 OpenCV + CNN/ResNet50 的苹果检测、成熟度分类与品质评估系统。",
+			"APMCM 2023 一等奖。基于 OpenCV + CNN/ResNet50 的果园苹果计数、定位、成熟度分类与品质评估。",
 		image: "/assets/projects/apple.jpg",
 		category: "other",
 		techStack: ["Python", "OpenCV", "CNN", "ResNet50"],
 		status: "completed",
 		sourceCode:
 			"https://github.com/Yingurt001/Intelligent-Apple-Recognition",
-		startDate: "2025-06-01",
-		endDate: "2025-08-10",
-		tags: ["Computer Vision", "Deep Learning"],
+		startDate: "2023-11-01",
+		tags: ["Computer Vision", "Deep Learning", "Math Modeling"],
 	},
 	{
 		id: "vegatable-pricing",
@@ -196,7 +195,7 @@ export const projectsData: Project[] = [
 		id: "pyrolysis-ml",
 		title: "脱硫灰催化反应 ML 预测",
 		description:
-			"数维杯 Outstanding Prize。逻辑回归 + 灰色预测算法建模催化反应，预测最优催化剂混合比。",
+			"数维杯国家二等奖。逻辑回归 + 灰色预测算法建模催化反应，预测最优催化剂混合比。",
 		image: "/assets/projects/pyrolysis.jpg",
 		category: "other",
 		techStack: [
