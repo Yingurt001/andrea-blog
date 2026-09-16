@@ -3,6 +3,7 @@
 	import { focusStats } from "../../../../data/focus-stats";
 	import {
 		type FocusView,
+		buildPalette,
 		addDays,
 		cnDate,
 		colorFor,
@@ -25,7 +26,7 @@
 	const { cursor, todayKey, minKey, maxKey, lastKey, onGo }: Props = $props();
 
 	const { days, dayProjects } = focusStats;
-	const colors = focusStats.projectColors ?? {};
+	const colors = buildPalette(focusStats.dayProjects);
 	// 旧快照没有 segments 字段（同步按钮更新前导出的），或者同步脚本关了 EXPORT_TIMELINE：
 	// 那就没有时间轴，只画项目份额，别的照常。
 	const hasTimeline = (focusStats.segments ?? []).length > 0;

@@ -3,6 +3,7 @@
 	import { focusStats } from "../../../../data/focus-stats";
 	import {
 		type FocusView,
+		buildPalette,
 		WEEKDAY_MON,
 		activeCount,
 		addMonths,
@@ -33,7 +34,7 @@
 	const { cursor, todayKey, minKey, maxKey, lastKey, onGo }: Props = $props();
 
 	const { days, dayProjects } = focusStats;
-	const colors = focusStats.projectColors ?? {};
+	const colors = buildPalette(focusStats.dayProjects);
 	const maxMinutes = Math.max(1, ...Object.values(days));
 
 	const ym = $derived(cursor.slice(0, 7));

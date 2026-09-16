@@ -150,23 +150,49 @@ export function lastActiveDay(days: Record<string, number>): string | null {
 	return ks[ks.length - 1] ?? null;
 }
 
-// 项目颜色优先用导出的那份（跟私有面板一个颜色），没有的按名字哈希到备用色板——
-// 同一个名字每次都落到同一格，不会换个视图变个色。
-const FALLBACK = [
-	"#ec4899",
-	"#a78bfa",
-	"#60a5fa",
-	"#34d399",
-	"#fbbf24",
-	"#f97316",
-	"#38bdf8",
-	"#2dd4bf",
+// 博客自己的一套色：亮、饱和、彼此拉得开。私有面板那套色板前 12 个是亮色，之后的项目
+// 只能拿深棕深绿之类的备用档，搬到博客上跟浅色主题打架，所以这里不再沿用导出的 projectColors。
+// 分配规则：按历史总时长排名，第一名拿第一个颜色。整份快照算一次，日/周/月/年四个视图
+// 里同一个项目永远同色。「其他」是被黑名单合并进来的杂项，固定给浅灰，不占亮色。
+const DOPAMINE = [
+	"#ff6b9d", // 樱桃粉
+	"#ffb443", // 杏橙
+	"#7c6cff", // 紫罗兰
+	"#5dd39e", // 薄荷绿
+	"#4d96ff", // 天蓝
+	"#ffd93d", // 柠檬黄
+	"#ff7e5f", // 珊瑚
+	"#3ed2c3", // 松石
+	"#c77dff", // 丁香紫
+	"#00bbf9", // 湖蓝
+	"#f15bb5", // 洋红
+	"#ff9f1c", // 橘
 ];
+const OTHER_NAME = "其他";
+const OTHER_COLOR = "#c4c9d4";
+
+export function buildPalette(dayProjects: DayProjects): Record<string, string> {
+	const total: Record<string, number> = {};
+	for (const byProject of Object.values(dayProjects)) {
+		for (const [name, m] of Object.entries(byProject))
+			total[name] = (total[name] ?? 0) + m;
+	}
+	const ranked = Object.keys(total)
+		.filter((n) => n !== OTHER_NAME)
+		.sort((a, b) => total[b] - total[a] || a.localeCompare(b));
+	const palette: Record<string, string> = { [OTHER_NAME]: OTHER_COLOR };
+	ranked.forEach((n, i) => {
+		palette[n] = DOPAMINE[i % DOPAMINE.length];
+	});
+	return palette;
+}
+
+/** 没进色板的名字（理论上不会有）按名字哈希兜底，同名永远同色。 */
 export function colorFor(name: string, colors: Record<string, string>): string {
 	if (colors[name]) return colors[name];
 	let h = 0;
 	for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-	return FALLBACK[h % FALLBACK.length];
+	return DOPAMINE[h % DOPAMINE.length];
 }
 
 /**
