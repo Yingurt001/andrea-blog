@@ -1,0 +1,151 @@
+---
+// 热力图 / 时间轴 / 柱状图共用的那个跟手 tooltip：挂在 <body> 上的单例 + position:fixed。
+// 单独抽成一个组件是因为它要被两处引：侧栏 FocusHeatmap.astro 和 /focus 整页的 Svelte 仪表盘。
+// Astro 按组件文件去重 <script>，一页里引两次也只会跑一份；里面还有 FLAG 兜底。
+// 任何元素挂上 data-tip="文字" 就能用，文字里的 \n 会断行。
+---
+
+<script>
+	// tooltip 是挂在 <body> 上的单例 + position:fixed，不放在热力图容器里 ——
+	// 整页那个网格外层是 overflow-x-auto，容器内的浮层会被裁掉半截。
+	// 事件走 document 委托：swup 换页后不用重新绑定，侧栏和整页两个热力图也共用同一个浮层。
+	(() => {
+		const FLAG = "__focusHeatmapTip";
+		if ((window as any)[FLAG]) return;
+		(window as any)[FLAG] = true;
+
+		let tip: HTMLElement | null = null;
+		let arrow: HTMLElement | null = null;
+
+		function ensureTip() {
+			if (tip?.isConnected) return tip;
+			tip = document.createElement("div");
+			tip.className = "focus-tip";
+			arrow = document.createElement("span");
+			arrow.className = "focus-tip-arrow";
+			tip.appendChild(arrow);
+			document.body.appendChild(tip);
+			return tip;
+		}
+
+		function show(cell: HTMLElement) {
+			const text = cell.dataset.tip;
+			if (!text) return;
+			const el = ensureTip();
+			// 第一个子节点是箭头，正文换成新的；用 textContent 而不是 innerHTML，
+			// 项目名来自数据文件，走 HTML 解析没必要也不安全。
+			el.firstChild?.nextSibling?.remove();
+			const body = document.createElement("span");
+			body.textContent = text;
+			el.appendChild(body);
+			el.classList.add("visible");
+
+			const r = cell.getBoundingClientRect();
+			const t = el.getBoundingClientRect();
+			const M = 8;
+			// 上方放不下就翻到格子下面，顶部那一行（周日）贴着页头时会走这条。
+			const above = r.top - t.height - M >= 0;
+			el.classList.toggle("below", !above);
+			const top = above ? r.top - t.height - M : r.bottom + M;
+
+			const cx = r.left + r.width / 2;
+			const raw = cx - t.width / 2;
+			const left = Math.min(
+				Math.max(raw, M),
+				window.innerWidth - t.width - M,
+			);
+			el.style.top = `${top}px`;
+			el.style.left = `${left}px`;
+			// 浮层被推回视口内时箭头不能跟着跑，得单独指回格子中心。
+			// 颜色也在这里给：三角形是靠 border 拼的，浮层在上／在下时该着色的边不同。
+			// 用 var(--tip-bg) 而不是写死颜色 —— 跟浮层背景引用同一个变量，
+			// 换主题时两者不可能对不上，也省掉「亮/暗 × 上/下」四条 CSS 规则。
+			if (arrow) {
+				arrow.style.left = `${cx - left}px`;
+				arrow.style.borderColor = above
+					? "var(--tip-bg) transparent transparent"
+					: "transparent transparent var(--tip-bg)";
+			}
+		}
+
+		function hide() {
+			tip?.classList.remove("visible");
+		}
+
+		// 任何带 data-tip 的元素都能弹：热力图格子、周视图的柱子、日视图时间轴上的色块。
+		const cellAt = (e: Event) =>
+			(e.target as Element | null)?.closest?.(
+				"[data-tip]",
+			) as HTMLElement | null;
+
+		document.addEventListener("pointerover", (e) => {
+			const cell = cellAt(e);
+			if (cell) show(cell);
+			else if (!(e.target as Element)?.closest?.(".focus-tip")) hide();
+		});
+		// 触屏没有 hover：点一下格子也弹，点别处收起。
+		document.addEventListener("click", (e) => {
+			const cell = cellAt(e);
+			if (cell) show(cell);
+			else hide();
+		});
+		document.addEventListener("scroll", hide, true);
+		// 换页时格子没了，浮层还挂在 body 上，会孤零零悬在新页面上。
+		document.addEventListener("swup:page:view", hide);
+		window.addEventListener("resize", hide);
+		// 点格子切到日视图时那个格子已经没了，浮层会孤零零留在原地——切视图的组件发这个事件收掉它。
+		document.addEventListener("focus-tip:hide", hide);
+	})();
+</script>
+
+<style is:global>
+	/* 悬停时描一圈边，让「现在指的是哪一格」在密集网格里看得出来。
+	   用 outline 而不是 border：border 会把格子撑大，整行跟着抖。 */
+	.focus-cell:hover {
+		outline: 1px solid var(--primary);
+		outline-offset: 1px;
+	}
+	.focus-tip {
+		position: fixed;
+		z-index: 100;
+		pointer-events: none;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(2px);
+		transition:
+			opacity 0.12s ease,
+			transform 0.12s ease,
+			visibility 0.12s;
+		max-width: min(260px, calc(100vw - 16px));
+		padding: 6px 10px;
+		border-radius: 6px;
+		--tip-bg: #24292f;
+		background: var(--tip-bg);
+		color: #fff;
+		font-size: 12px;
+		line-height: 1.5;
+		white-space: pre-line; /* formatTooltip 用 \n 分行 */
+		box-shadow: 0 3px 12px rgb(0 0 0 / 0.28);
+	}
+	:root.dark .focus-tip {
+		--tip-bg: #f6f8fa;
+		color: #1f2328;
+	}
+	.focus-tip.visible {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+	.focus-tip-arrow {
+		position: absolute;
+		top: 100%;
+		width: 0;
+		height: 0;
+		margin-left: -5px;
+		border: 5px solid transparent; /* 哪条边着色由 show() 按上下方向写 inline */
+	}
+	.focus-tip.below .focus-tip-arrow {
+		top: auto;
+		bottom: 100%;
+	}
+</style>

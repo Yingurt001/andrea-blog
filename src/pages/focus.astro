@@ -1,13 +1,10 @@
 ---
+import FocusDashboard from "../components/widgets/focus/dashboard/FocusDashboard.svelte";
+import FocusTip from "../components/widgets/focus/FocusTip.astro";
 import { siteConfig } from "../config";
 import { focusStats } from "../data/focus-stats";
-import FocusHeatmap from "../components/widgets/focus/FocusHeatmap.astro";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
-import {
-	LEVEL_OPACITY,
-	buildHeatmap,
-	cellStyle,
-} from "../utils/focus-heatmap";
+import { keyOf } from "../utils/focus-heatmap";
 
 export const prerender = true;
 
@@ -15,22 +12,29 @@ if (!siteConfig.featurePages.focus) {
 	return Astro.redirect("/404/");
 }
 
-const { totalMinutes, totalSessions, activeDays, days, dayProjects, updatedAt } =
-	focusStats;
-const totalHours = (totalMinutes / 60).toFixed(1);
+const { totalSessions, updatedAt } = focusStats;
 
-// 26 周版；侧栏那个 widget 是同一套算法的 14 周版，共用 utils/focus-heatmap
-// 免得两处各算各的，同一天在两边显示成不同深浅。
-const WEEKS = 26;
-const { cells, maxMinutes, monthLabels } = buildHeatmap(days, WEEKS, dayProjects);
+// 「今天」在构建期定死传给 Svelte：这个组件服务端和浏览器各渲染一遍，
+// 两边各自 new Date() 可能不是同一天，26 周热力图的右端就会错开一周。
+// 数据本身只能随一次同步 + 重新构建而变，所以构建日期就是数据的「今天」。
+const todayKey = keyOf(new Date());
 
 const updatedLabel = updatedAt
-	? new Date(updatedAt).toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" })
+	? new Date(updatedAt).toLocaleDateString("zh-CN", {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		})
 	: null;
 ---
 
-<MainGridLayout title="专注统计" description="按天记录的专注时长热力图">
-	<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+<MainGridLayout
+	title="专注统计"
+	description="按天记录的专注时长：热力图、日视图时间轴、周月年统计"
+>
+	<div
+		class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
+	>
 		<div class="card-base z-10 px-6 sm:px-9 py-6 relative w-full">
 			<div class="flex flex-col items-start justify-center mb-6">
 				<h1
@@ -38,45 +42,28 @@ const updatedLabel = updatedAt
 				>
 					🎯 专注统计
 				</h1>
-				<p class="text-black/50 dark:text-white/50 text-sm sm:text-base">
-					{updatedLabel ? `最后更新于 ${updatedLabel}` : "还没有同步过数据"}
+				<p
+					class="text-black/50 dark:text-white/50 text-sm sm:text-base"
+				>
+					{
+						updatedLabel
+							? `最后更新于 ${updatedLabel}`
+							: "还没有同步过数据"
+					}
 				</p>
 			</div>
 
-			<div class="grid grid-cols-3 gap-4 mb-8">
-				<div class="rounded-xl bg-[var(--btn-regular-bg)] p-4 sm:p-5 text-center">
-					<div class="text-2xl sm:text-3xl font-bold text-[var(--primary)]">{totalHours}</div>
-					<div class="text-xs sm:text-sm text-black/50 dark:text-white/50 mt-1">总时长（小时）</div>
-				</div>
-				<div class="rounded-xl bg-[var(--btn-regular-bg)] p-4 sm:p-5 text-center">
-					<div class="text-2xl sm:text-3xl font-bold text-[var(--primary)]">{totalSessions}</div>
-					<div class="text-xs sm:text-sm text-black/50 dark:text-white/50 mt-1">专注次数</div>
-				</div>
-				<div class="rounded-xl bg-[var(--btn-regular-bg)] p-4 sm:p-5 text-center">
-					<div class="text-2xl sm:text-3xl font-bold text-[var(--primary)]">{activeDays}</div>
-					<div class="text-xs sm:text-sm text-black/50 dark:text-white/50 mt-1">活跃天数</div>
-				</div>
-			</div>
-
-			<div class="overflow-x-auto pb-2">
-				<div class="min-w-[560px]">
-					<FocusHeatmap cells={cells} maxMinutes={maxMinutes} weeks={WEEKS} monthLabels={monthLabels} />
-				</div>
-			</div>
-
-			<div class="flex items-center gap-2 mt-4 text-xs text-black/40 dark:text-white/40">
-				<span>少</span>
-				{LEVEL_OPACITY.map((_, level) => (
-					<span class="w-3 h-3 rounded-[2px] inline-block" style={cellStyle(level)} />
-				))}
-				<span>多</span>
-			</div>
-
-			{totalSessions === 0 && (
-				<p class="text-center text-black/40 dark:text-white/40 text-sm mt-10">
-					数据还是空的——去 Obsidian 私有笔记里点「同步到博客公开统计页」试试
-				</p>
-			)}
+			{
+				totalSessions === 0 ? (
+					<p class="text-center text-black/40 dark:text-white/40 text-sm py-10">
+						数据还是空的——去 Obsidian
+						私有笔记里点「同步到博客公开统计页」试试
+					</p>
+				) : (
+					<FocusDashboard client:load todayKey={todayKey} />
+				)
+			}
 		</div>
 	</div>
+	<FocusTip />
 </MainGridLayout>

@@ -7,6 +7,8 @@ export interface HeatCell {
 	minutes: number;
 	/** 当天各项目的分钟数，按多到少排好序。数据源已脱敏，这里拿到的就能直接显示。 */
 	projects: [string, number][];
+	/** 只是为了把网格补成整周的占位格（年视图里 1 月 1 日之前、12 月 31 日之后那几格），不画也不响应 */
+	pad?: boolean;
 }
 
 /** "YYYY-MM-DD" -> 项目名 -> 分钟数 */
@@ -22,9 +24,29 @@ export interface Heatmap {
 // 不用 rgba()：主题的 --primary 是 oklch()，rgba() 吃不下它。
 export const LEVEL_OPACITY = [0, 0.3, 0.55, 0.75, 1];
 
-const pad2 = (n: number) => String(n).padStart(2, "0");
-const keyOf = (d: Date) =>
+export const pad2 = (n: number) => String(n).padStart(2, "0");
+export const keyOf = (d: Date) =>
 	`${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+/** "YYYY-MM-DD" -> 本地时区零点的 Date。不走 new Date(string)：那个会按 UTC 解析，在 UTC+ 的机器上差一天。 */
+export const parseKey = (k: string) => {
+	const [y, m, d] = k.split("-").map(Number);
+	return new Date(y, m - 1, d);
+};
+
+/** 把一天的数据拼成一个格子；日/周/月/年视图和 tooltip 都吃这个形状。 */
+export function cellOf(
+	date: string,
+	days: Record<string, number>,
+	dayProjects: DayProjects,
+): HeatCell {
+	return {
+		date,
+		minutes: days[date] ?? 0,
+		projects: Object.entries(dayProjects[date] ?? {}).sort(
+			(a, b) => b[1] - a[1],
+		),
+	};
+}
 
 /**
  * 拼出「最近 weeks 周」的格子：7 行（周日~周六）× weeks 列。
@@ -36,8 +58,11 @@ export function buildHeatmap(
 	days: Record<string, number>,
 	weeks: number,
 	dayProjects: DayProjects = {},
+	todayKey?: string,
 ): Heatmap {
-	const today = new Date();
+	// todayKey 由调用方在构建期定下来传进来（/focus 页那个 Svelte 组件要在服务端和浏览器
+	// 各渲染一遍，两边 new Date() 不一定是同一天，窗口右端就会错开一周）。不传就按现在算。
+	const today = todayKey ? parseKey(todayKey) : new Date();
 	today.setHours(0, 0, 0, 0);
 	const endOfWeek = new Date(today);
 	endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay())); // 补到本周六
@@ -51,12 +76,7 @@ export function buildHeatmap(
 		const k = keyOf(d);
 		// dayProjects 默认空对象：同步脚本更新前的旧快照没有这个字段，
 		// 那种情况下 tooltip 退化成「日期 + 总时长」，不至于整页报错。
-		const byProject = dayProjects[k] ?? {};
-		cells.push({
-			date: k,
-			minutes: days[k] ?? 0,
-			projects: Object.entries(byProject).sort((a, b) => b[1] - a[1]),
-		});
+		cells.push(cellOf(k, days, dayProjects));
 	}
 
 	const monthLabels: { col: number; label: string }[] = [];
@@ -73,6 +93,52 @@ export function buildHeatmap(
 	return {
 		cells,
 		maxMinutes: Math.max(1, ...all),
+		monthLabels,
+	};
+}
+
+/**
+ * 某一年的整年热力图：从 1 月 1 日所在周的周日铺到 12 月 31 日所在周的周六，
+ * 年内之外的格子标 pad。maxMinutes 同样取全量最大值，跟 26 周版同一套深浅。
+ */
+export function buildYearHeatmap(
+	days: Record<string, number>,
+	dayProjects: DayProjects,
+	year: number,
+): Heatmap {
+	const start = new Date(year, 0, 1);
+	start.setDate(start.getDate() - start.getDay());
+	const end = new Date(year, 11, 31);
+	end.setDate(end.getDate() + (6 - end.getDay()));
+	const total = Math.round((end.getTime() - start.getTime()) / 86400000) + 1;
+	const weeks = total / 7;
+
+	const cells: HeatCell[] = [];
+	for (let i = 0; i < total; i++) {
+		const d = new Date(start);
+		d.setDate(d.getDate() + i);
+		const k = keyOf(d);
+		const cell = cellOf(k, days, dayProjects);
+		if (d.getFullYear() !== year) cell.pad = true;
+		cells.push(cell);
+	}
+
+	const monthLabels: { col: number; label: string }[] = [];
+	let lastMonth = -1;
+	for (let w = 0; w < weeks; w++) {
+		// 一列里找第一个年内的格子来定这列属于几月；1 月那列可能前几格是去年的
+		const first = cells.slice(w * 7, w * 7 + 7).find((c) => !c.pad);
+		if (!first) continue;
+		const m = Number(first.date.slice(5, 7));
+		if (m !== lastMonth) {
+			monthLabels.push({ col: w, label: `${m}月` });
+			lastMonth = m;
+		}
+	}
+
+	return {
+		cells,
+		maxMinutes: Math.max(1, ...Object.values(days)),
 		monthLabels,
 	};
 }
