@@ -13,9 +13,7 @@ if (!siteConfig.featurePages.skills) {
 	return Astro.redirect("/404/");
 }
 
-const categories = [
-	...new Set(skillsData.map((skill) => skill.category)),
-];
+const categories = [...new Set(skillsData.map((skill) => skill.category))];
 
 const getCategoryText = (category: string) => {
 	switch (category) {
@@ -36,16 +34,18 @@ const getCategoryText = (category: string) => {
 
 const getCategoryIcon = (category: string) => {
 	switch (category) {
+		// 分类键沿用主题的 frontend/backend/database/tools/other，显示名在 i18n 里改成了研究向，
+		// 图标这里跟着换，不然「机器学习与统计」配一个网页图标。
 		case "frontend":
-			return "material-symbols:web";
+			return "material-symbols:psychology";
 		case "backend":
-			return "material-symbols:dns";
+			return "material-symbols:code";
 		case "database":
-			return "material-symbols:storage";
+			return "material-symbols:functions";
 		case "tools":
-			return "material-symbols:build";
+			return "material-symbols:memory";
 		case "other":
-			return "material-symbols:widgets";
+			return "material-symbols:photo-camera";
 		default:
 			return "material-symbols:category";
 	}
@@ -93,9 +93,7 @@ const subtitle = i18n(I18nKey.skillsSubtitle);
 			</div>
 
 			<div id="skills-grid" class="grid gap-6 items-start">
-				{skillsData.map((skill) => (
-					<SkillCard skill={skill} />
-				))}
+				{skillsData.map((skill) => <SkillCard skill={skill} />)}
 			</div>
 
 			<div id="no-results" class="hidden text-center py-16">

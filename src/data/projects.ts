@@ -59,7 +59,8 @@ export const projectsData: Project[] = [
 		category: "other",
 		techStack: ["Python", "PyTorch", "Transformer", "BiLSTM"],
 		status: "completed",
-		sourceCode: "https://github.com/Yingurt001/Transformer-Enhanced-BiLSTM-for-Post-Loan-Default-Prediction-",
+		sourceCode:
+			"https://github.com/Yingurt001/Transformer-Enhanced-BiLSTM-for-Post-Loan-Default-Prediction-",
 		startDate: "2024-03-01",
 		endDate: "2024-08-31",
 		featured: true,
@@ -69,7 +70,7 @@ export const projectsData: Project[] = [
 		id: "hyperbolic-nn",
 		title: "双曲神经网络研究",
 		description:
-			"在诺丁汉 Ada HPC 上实验双曲空间中的神经网络，探索 Poincaré/Klein 模型下的 MLR 与嵌入方法。",
+			"双曲空间上的神经网络：在 Klein 模型上补全全连接、MLR 分类头、归一化等组件，与 Poincaré / Lorentz 实现做系统对比与数值稳定性实验。实验跑在 Nottingham Ada 与 CINECA Leonardo 集群上。",
 		image: "/assets/projects/hyperbolic.jpg",
 		category: "other",
 		techStack: ["Python", "PyTorch", "HPC", "SLURM"],
@@ -86,9 +87,16 @@ export const projectsData: Project[] = [
 			"Outstanding Prize。基于 NSGA-II 多目标优化朱诺旅游可持续发展，构建 SPEM 模型，推广至巴厘岛和圣芭芭拉。",
 		image: "/assets/projects/mcm-juneau.jpg",
 		category: "other",
-		techStack: ["Python", "NSGA-II", "AHP", "CRITIC", "Dynamic Programming"],
+		techStack: [
+			"Python",
+			"NSGA-II",
+			"AHP",
+			"CRITIC",
+			"Dynamic Programming",
+		],
 		status: "completed",
-		sourceCode: "https://github.com/Yingurt001/Sustainable-Tourism-Optimization-in-Juneau-via-NSGA-",
+		sourceCode:
+			"https://github.com/Yingurt001/Sustainable-Tourism-Optimization-in-Juneau-via-NSGA-",
 		startDate: "2025-01-15",
 		endDate: "2025-02-15",
 		tags: ["Math Modeling", "Optimization", "MCM"],
@@ -102,7 +110,8 @@ export const projectsData: Project[] = [
 		category: "other",
 		techStack: ["Python", "LSTM", "Markov Chain", "MCMC"],
 		status: "completed",
-		sourceCode: "https://github.com/Yingurt001/Tennis-Match-Outcome-Prediction-via-Ensemble-Learning",
+		sourceCode:
+			"https://github.com/Yingurt001/Tennis-Match-Outcome-Prediction-via-Ensemble-Learning",
 		startDate: "2024-01-15",
 		endDate: "2024-02-15",
 		tags: ["Math Modeling", "Sports Analytics", "MCM"],
@@ -116,7 +125,8 @@ export const projectsData: Project[] = [
 		category: "other",
 		techStack: ["Python", "OpenCV", "CNN", "ResNet50"],
 		status: "completed",
-		sourceCode: "https://github.com/Yingurt001/Intelligent-Apple-Recognition",
+		sourceCode:
+			"https://github.com/Yingurt001/Intelligent-Apple-Recognition",
 		startDate: "2025-06-01",
 		endDate: "2025-08-10",
 		tags: ["Computer Vision", "Deep Learning"],
@@ -128,9 +138,15 @@ export const projectsData: Project[] = [
 			"国赛数模 National 3rd Prize。Prophet + 模拟退火 + 遗传算法，七天动态定价与补货优化。",
 		image: "/assets/projects/vegetable.jpg",
 		category: "other",
-		techStack: ["Python", "Prophet", "Simulated Annealing", "Genetic Algorithm"],
+		techStack: [
+			"Python",
+			"Prophet",
+			"Simulated Annealing",
+			"Genetic Algorithm",
+		],
 		status: "completed",
-		sourceCode: "https://github.com/Yingurt001/vegetable-pricing-replenishment-model",
+		sourceCode:
+			"https://github.com/Yingurt001/vegetable-pricing-replenishment-model",
 		startDate: "2023-09-01",
 		endDate: "2023-10-31",
 		tags: ["Math Modeling", "Optimization"],
@@ -152,8 +168,7 @@ export const projectsData: Project[] = [
 	{
 		id: "vibelog",
 		title: "Vibelog",
-		description:
-			"记录日常 vibe 的个人 App。",
+		description: "记录日常 vibe 的个人 App。",
 		image: "/assets/projects/vibelog.jpg",
 		category: "mobile",
 		techStack: ["TypeScript"],
@@ -184,9 +199,15 @@ export const projectsData: Project[] = [
 			"数维杯 Outstanding Prize。逻辑回归 + 灰色预测算法建模催化反应，预测最优催化剂混合比。",
 		image: "/assets/projects/pyrolysis.jpg",
 		category: "other",
-		techStack: ["MATLAB", "Python", "Logistic Regression", "Grey Prediction"],
+		techStack: [
+			"MATLAB",
+			"Python",
+			"Logistic Regression",
+			"Grey Prediction",
+		],
 		status: "completed",
-		sourceCode: "https://github.com/Yingurt001/Pyrolysis-Process-Prediction-ML",
+		sourceCode:
+			"https://github.com/Yingurt001/Pyrolysis-Process-Prediction-ML",
 		startDate: "2023-12-15",
 		endDate: "2024-01-15",
 		tags: ["Math Modeling", "Chemistry"],

@@ -205,12 +205,12 @@ export const zh_TW: Translation = {
 
 	// 技能展示頁面
 	[Key.skills]: "技能展示",
-	[Key.skillsSubtitle]: "我的技術技能和專業知識",
-	[Key.skillsFrontend]: "前端開發",
-	[Key.skillsBackend]: "後端開發",
-	[Key.skillsDatabase]: "資料庫",
-	[Key.skillsTools]: "開發工具",
-	[Key.skillsOther]: "其他技能",
+	[Key.skillsSubtitle]: "做研究和寫程式時真正在用的東西",
+	[Key.skillsFrontend]: "機器學習與統計",
+	[Key.skillsBackend]: "程式語言與框架",
+	[Key.skillsDatabase]: "數學與理論",
+	[Key.skillsTools]: "工具與算力",
+	[Key.skillsOther]: "研究之外",
 	[Key.skillLevel]: "熟練度",
 	[Key.skillLevelBeginner]: "初學者",
 	[Key.skillLevelIntermediate]: "中級",

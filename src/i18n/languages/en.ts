@@ -220,12 +220,12 @@ export const en: Translation = {
 
 	// Skills Page
 	[Key.skills]: "Skills",
-	[Key.skillsSubtitle]: "My technical skills and expertise",
-	[Key.skillsFrontend]: "Frontend Development",
-	[Key.skillsBackend]: "Backend Development",
-	[Key.skillsDatabase]: "Database",
-	[Key.skillsTools]: "Development Tools",
-	[Key.skillsOther]: "Other Skills",
+	[Key.skillsSubtitle]: "What I actually use for research and code",
+	[Key.skillsFrontend]: "Machine Learning & Statistics",
+	[Key.skillsBackend]: "Languages & Frameworks",
+	[Key.skillsDatabase]: "Mathematics & Theory",
+	[Key.skillsTools]: "Tools & Compute",
+	[Key.skillsOther]: "Beyond Research",
 	[Key.skillLevel]: "Proficiency",
 	[Key.skillLevelBeginner]: "Beginner",
 	[Key.skillLevelIntermediate]: "Intermediate",

@@ -18,7 +18,7 @@ draft: false
 
 ## 关于我
 
-我是 Ying Zhang(张赢)，目前是诺丁汉大学数学科学学院统计学本科生，是一个学术研究者，研究兴趣是Simulation-based Inference, Hyperbolic Neural network, Financial credit anti-fraud detection. 欢迎与我合作~
+我是 Ying Zhang(张赢)，本科在诺丁汉大学数学科学学院读统计，现在在剑桥大学读 MPhil in Data Intensive Science，研究兴趣是 Hyperbolic Neural Networks、Simulation-based Inference、Time-series Early Warning。欢迎与我合作~
 
 在数模方面拿过不少奖（MCM Prize × 2, National 1st Prize × 1），也在 EPSRC 资助下做过研究项目。
 

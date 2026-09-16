@@ -5,7 +5,7 @@ export const timelineData: TimelineItem[] = [
 		id: "cambridge-dis",
 		title: "MPhil in Data Intensive Science — University of Cambridge",
 		description:
-			"录取剑桥大学物理科学学院 Data Intensive Science 硕士项目，由 Cavendish Laboratory、Institute of Astronomy 和 DAMTP 三系联合开设，聚焦机器学习、统计推断与大规模数据分析在物理科学中的应用。2026 年 10 月入学。",
+			"剑桥大学物理科学学院 Data Intensive Science 硕士，由 Cavendish Laboratory、Institute of Astronomy 和 DAMTP 三系联合开设，Lucy Cavendish College。Michaelmas 学期主修 Statistical Methods、Machine Learning、Research Computing 三门 major，Lent 学期 Advanced Statistical Methods 与 Deep Learning，全年以占 25% 的 Data Analysis Project 收尾。",
 		type: "education",
 		startDate: "2026-10-01",
 		endDate: "2027-07-31",
@@ -13,14 +13,15 @@ export const timelineData: TimelineItem[] = [
 		organization: "University of Cambridge",
 		skills: [
 			"Machine Learning",
+			"Deep Learning",
 			"Statistical Inference",
+			"Research Computing",
 			"Data Analysis",
-			"Physics",
 		],
 		achievements: [
-			"录取 MPhil in Data Intensive Science",
-			"School of the Physical Sciences",
-			"2026-10 入学",
+			"MPhil in Data Intensive Science",
+			"Lucy Cavendish College",
+			"2026-10 入学 · 2027-07 结课",
 		],
 		icon: "material-symbols:school",
 		color: "#A3262D",
@@ -30,10 +31,9 @@ export const timelineData: TimelineItem[] = [
 		id: "klein-hnn-research",
 		title: "Klein Manifold Neural Networks — MHUG Lab",
 		description:
-			"在 MHUG 实验室 Ziheng Chen 博士指导下，研究双曲神经网络。负责在 Klein 流形上完善各神经网络组件（全连接层、MLR 分类头等），并与 Poincaré、Lorentz 等其他流形上的实现进行系统对比实验。",
+			"在 MHUG 实验室 Ziheng Chen 博士指导下，研究双曲神经网络。负责在 Klein 流形上完善各神经网络组件（全连接层、MLR 分类头、归一化层等），并与 Poincaré、Lorentz 等其他流形上的实现进行系统对比实验。毕业后继续推进：多数据集数值稳定性实验，论文已投稿评审中；同时把归一化层推广到一般齐次空间。",
 		type: "project",
 		startDate: "2026-02-07",
-		endDate: "2026-05-31",
 		location: "Trento, Italy (Remote)",
 		organization: "University of Trento — MHUG Lab",
 		skills: [
@@ -46,7 +46,7 @@ export const timelineData: TimelineItem[] = [
 		achievements: [
 			"完善 Klein 流形上的神经网络组件（FC、MLR 等）",
 			"多流形对比实验（Klein vs Poincaré vs Lorentz）",
-			"预期顶会论文产出",
+			"论文已投稿，评审中",
 		],
 		links: [
 			{
@@ -92,7 +92,7 @@ export const timelineData: TimelineItem[] = [
 			"在清华大学杨悦学姐指导下，继续 T-BiLSTM 贷款违约预测研究。基于 Freddie Mac 时序数据，扩展 KAN 架构与 SHAP 可解释性分析，推进期刊版论文。",
 		type: "project",
 		startDate: "2026-04-10",
-		location: "Nottingham, UK (Remote)",
+		location: "Remote",
 		organization: "Tsinghua University (Collaboration)",
 		skills: [
 			"Transformer",
@@ -265,10 +265,7 @@ export const timelineData: TimelineItem[] = [
 		location: "Inner Mongolia, CN",
 		organization: "数维杯",
 		skills: ["Logistic Regression", "Grey Prediction", "Python"],
-		achievements: [
-			"Outstanding Prize（特等奖）",
-			"催化剂混合比预测最优",
-		],
+		achievements: ["Outstanding Prize（特等奖）", "催化剂混合比预测最优"],
 		links: [
 			{
 				name: "GitHub",
@@ -290,10 +287,7 @@ export const timelineData: TimelineItem[] = [
 		location: "Beijing, CN",
 		organization: "全国大学生数学建模竞赛",
 		skills: ["Prophet", "Simulated Annealing", "Genetic Algorithm", "MIQP"],
-		achievements: [
-			"National 3rd Prize（国三）",
-			"七天动态定价与补货优化",
-		],
+		achievements: ["National 3rd Prize（国三）", "七天动态定价与补货优化"],
 		links: [
 			{
 				name: "GitHub",
@@ -307,14 +301,11 @@ export const timelineData: TimelineItem[] = [
 	{
 		id: "mcm-2023",
 		title: "数学建模竞赛 — National 1st Prize",
-		description:
-			"2023 年数学建模竞赛全国一等奖。",
+		description: "2023 年数学建模竞赛全国一等奖。",
 		type: "achievement",
 		startDate: "2023-04-01",
 		organization: "数学建模竞赛",
-		achievements: [
-			"National 1st Prize（全国一等奖）",
-		],
+		achievements: ["National 1st Prize（全国一等奖）"],
 		icon: "material-symbols:emoji-events",
 		color: "#DC2626",
 	},
@@ -346,10 +337,7 @@ export const timelineData: TimelineItem[] = [
 		type: "project",
 		startDate: "2026-03-30",
 		skills: ["Astro", "TypeScript", "Vercel", "Markdown"],
-		achievements: [
-			"从零搭建并部署上线",
-			"迁移旧网站 16 篇技术文章",
-		],
+		achievements: ["从零搭建并部署上线", "迁移旧网站 16 篇技术文章"],
 		links: [
 			{
 				name: "博客",
