@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 4662,
-  "totalSessions": 57,
-  "activeDays": 12,
+  "totalMinutes": 5313,
+  "totalSessions": 61,
+  "activeDays": 13,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -40,7 +40,8 @@ export const focusStats: FocusStats = {
     "2026-09-13": 398,
     "2026-09-14": 789,
     "2026-09-15": 425,
-    "2026-09-16": 115
+    "2026-09-16": 719,
+    "2026-09-17": 47
   },
   "dayProjects": {
     "2026-09-04": {
@@ -103,7 +104,14 @@ export const focusStats: FocusStats = {
       "其他": 20
     },
     "2026-09-16": {
-      "创业": 115
+      "其他": 330,
+      "GyroBN": 191,
+      "创业": 115,
+      "科研": 52,
+      "Vibe Coding": 31
+    },
+    "2026-09-17": {
+      "GyroBN": 47
     }
   },
   "segments": [
@@ -519,6 +527,41 @@ export const focusStats: FocusStats = {
       "e": 640,
       "m": 61,
       "p": "创业"
+    },
+    {
+      "d": "2026-09-16",
+      "s": 641,
+      "e": 672,
+      "m": 31,
+      "p": "Vibe Coding"
+    },
+    {
+      "d": "2026-09-16",
+      "s": 780,
+      "e": 1110,
+      "m": 330,
+      "p": "其他"
+    },
+    {
+      "d": "2026-09-16",
+      "s": 1146,
+      "e": 1198,
+      "m": 52,
+      "p": "科研"
+    },
+    {
+      "d": "2026-09-16",
+      "s": 1249,
+      "e": 1440,
+      "m": 191,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-09-17",
+      "s": 0,
+      "e": 46,
+      "m": 47,
+      "p": "GyroBN"
     }
   ],
   "projectColors": {
@@ -533,5 +576,5 @@ export const focusStats: FocusStats = {
     "科研": "#9f1239",
     "阅读": "#6d28d9"
   },
-  "updatedAt": "2026-09-16T02:52:22.717Z"
+  "updatedAt": "2026-09-16T16:46:32.651Z"
 };
