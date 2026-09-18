@@ -624,5 +624,5 @@ export const focusStats: FocusStats = {
     "科研": "#9f1239",
     "阅读": "#6d28d9"
   },
-  "updatedAt": "2026-09-17T16:37:41.079Z"
+  "updatedAt": "2026-09-18T02:15:41.846Z"
 };
