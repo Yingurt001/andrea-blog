@@ -25,8 +25,8 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 6149,
-  "totalSessions": 70,
+  "totalMinutes": 6273,
+  "totalSessions": 71,
   "activeDays": 14,
   "days": {
     "2026-09-04": 156,
@@ -42,7 +42,7 @@ export const focusStats: FocusStats = {
     "2026-09-15": 425,
     "2026-09-16": 719,
     "2026-09-17": 536,
-    "2026-09-18": 347
+    "2026-09-18": 471
   },
   "dayProjects": {
     "2026-09-04": {
@@ -118,6 +118,7 @@ export const focusStats: FocusStats = {
     },
     "2026-09-18": {
       "GyroBN": 256,
+      "健身": 124,
       "阅读": 56,
       "学英语": 35
     }
@@ -640,6 +641,13 @@ export const focusStats: FocusStats = {
       "e": 995,
       "m": 56,
       "p": "阅读"
+    },
+    {
+      "d": "2026-09-18",
+      "s": 1081,
+      "e": 1206,
+      "m": 124,
+      "p": "健身"
     }
   ],
   "projectColors": {
@@ -654,5 +662,5 @@ export const focusStats: FocusStats = {
     "科研": "#9f1239",
     "阅读": "#6d28d9"
   },
-  "updatedAt": "2026-09-18T08:35:27.033Z"
+  "updatedAt": "2026-09-18T12:05:42.739Z"
 };
