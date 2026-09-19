@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 6317,
-  "totalSessions": 72,
-  "activeDays": 14,
+  "totalMinutes": 6574,
+  "totalSessions": 74,
+  "activeDays": 15,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -42,7 +42,8 @@ export const focusStats: FocusStats = {
     "2026-09-15": 425,
     "2026-09-16": 719,
     "2026-09-17": 536,
-    "2026-09-18": 515
+    "2026-09-18": 515,
+    "2026-09-19": 257
   },
   "dayProjects": {
     "2026-09-04": {
@@ -121,6 +122,9 @@ export const focusStats: FocusStats = {
       "健身": 124,
       "阅读": 56,
       "学英语": 35
+    },
+    "2026-09-19": {
+      "GyroBN": 257
     }
   },
   "segments": [
@@ -655,19 +659,33 @@ export const focusStats: FocusStats = {
       "e": 1420,
       "m": 44,
       "p": "GyroBN"
+    },
+    {
+      "d": "2026-09-19",
+      "s": 642,
+      "e": 699,
+      "m": 57,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-09-19",
+      "s": 782,
+      "e": 982,
+      "m": 200,
+      "p": "GyroBN"
     }
   ],
   "projectColors": {
-    "Agent 课程学习": "#fb7185",
-    "GyroBN": "#a78bfa",
-    "Vibe Coding": "#4d7c0f",
-    "健身": "#047857",
-    "其他": "#a3a3a3",
-    "创业": "#2dd4bf",
-    "博客运营": "#0f766e",
-    "学英语": "#be185d",
-    "科研": "#9f1239",
-    "阅读": "#6d28d9"
+    "Agent 课程学习": "#c9a1e7",
+    "GyroBN": "#b09ef9",
+    "Vibe Coding": "#b1db78",
+    "健身": "#47c897",
+    "其他": "#b6c0c3",
+    "创业": "#32c4cb",
+    "博客运营": "#de8dd6",
+    "学英语": "#eac758",
+    "科研": "#f68897",
+    "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-09-18T15:40:40.631Z"
+  "updatedAt": "2026-09-19T08:22:18.378Z"
 };
