@@ -25,8 +25,8 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 8547,
-  "totalSessions": 87,
+  "totalMinutes": 8891,
+  "totalSessions": 90,
   "activeDays": 22,
   "days": {
     "2026-09-04": 156,
@@ -50,7 +50,7 @@ export const focusStats: FocusStats = {
     "2026-09-27": 108,
     "2026-09-28": 163,
     "2026-09-30": 217,
-    "2026-10-01": 96
+    "2026-10-01": 440
   },
   "dayProjects": {
     "2026-09-04": {
@@ -153,6 +153,7 @@ export const focusStats: FocusStats = {
       "GyroBN": 60
     },
     "2026-10-01": {
+      "Cmabridge课程学习": 344,
       "健身": 96
     }
   },
@@ -765,6 +766,27 @@ export const focusStats: FocusStats = {
       "e": 533,
       "m": 96,
       "p": "健身"
+    },
+    {
+      "d": "2026-10-01",
+      "s": 554,
+      "e": 716,
+      "m": 162,
+      "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-10-01",
+      "s": 1006,
+      "e": 1104,
+      "m": 98,
+      "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-10-01",
+      "s": 1104,
+      "e": 1189,
+      "m": 84,
+      "p": "Cmabridge课程学习"
     }
   ],
   "projectColors": {
@@ -780,5 +802,5 @@ export const focusStats: FocusStats = {
     "科研": "#f68897",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-01T08:14:10.444Z"
+  "updatedAt": "2026-10-01T19:56:04.019Z"
 };
