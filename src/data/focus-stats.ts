@@ -25,8 +25,8 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 9212,
-  "totalSessions": 95,
+  "totalMinutes": 9472,
+  "totalSessions": 98,
   "activeDays": 24,
   "days": {
     "2026-09-04": 156,
@@ -52,7 +52,7 @@ export const focusStats: FocusStats = {
     "2026-09-30": 217,
     "2026-10-01": 539,
     "2026-10-02": 162,
-    "2026-10-04": 60
+    "2026-10-04": 320
   },
   "dayProjects": {
     "2026-09-04": {
@@ -165,7 +165,10 @@ export const focusStats: FocusStats = {
       "Cmabridge课程学习": 76
     },
     "2026-10-04": {
-      "健身": 60
+      "Vibe Coding": 153,
+      "其他": 81,
+      "健身": 60,
+      "吉他": 26
     }
   },
   "segments": [
@@ -833,6 +836,27 @@ export const focusStats: FocusStats = {
       "e": 660,
       "m": 60,
       "p": "健身"
+    },
+    {
+      "d": "2026-10-04",
+      "s": 679,
+      "e": 832,
+      "m": 153,
+      "p": "Vibe Coding"
+    },
+    {
+      "d": "2026-10-04",
+      "s": 832,
+      "e": 913,
+      "m": 81,
+      "p": "其他"
+    },
+    {
+      "d": "2026-10-04",
+      "s": 1016,
+      "e": 1042,
+      "m": 26,
+      "p": "吉他"
     }
   ],
   "projectColors": {
@@ -844,9 +868,10 @@ export const focusStats: FocusStats = {
     "其他": "#b6c0c3",
     "创业": "#32c4cb",
     "博客运营": "#de8dd6",
+    "吉他": "#60a5fa",
     "学英语": "#eac758",
     "科研": "#f68897",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-04T10:18:45.237Z"
+  "updatedAt": "2026-10-06T20:04:03.765Z"
 };
