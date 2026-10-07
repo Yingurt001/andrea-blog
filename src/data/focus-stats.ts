@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 9472,
-  "totalSessions": 98,
-  "activeDays": 24,
+  "totalMinutes": 9713,
+  "totalSessions": 102,
+  "activeDays": 26,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -52,7 +52,9 @@ export const focusStats: FocusStats = {
     "2026-09-30": 217,
     "2026-10-01": 539,
     "2026-10-02": 162,
-    "2026-10-04": 320
+    "2026-10-04": 320,
+    "2026-10-06": 145,
+    "2026-10-07": 96
   },
   "dayProjects": {
     "2026-09-04": {
@@ -169,6 +171,14 @@ export const focusStats: FocusStats = {
       "其他": 81,
       "健身": 60,
       "吉他": 26
+    },
+    "2026-10-06": {
+      "健身": 85,
+      "创业": 60
+    },
+    "2026-10-07": {
+      "创业": 88,
+      "日语学习": 8
     }
   },
   "segments": [
@@ -857,6 +867,34 @@ export const focusStats: FocusStats = {
       "e": 1042,
       "m": 26,
       "p": "吉他"
+    },
+    {
+      "d": "2026-10-06",
+      "s": 1179,
+      "e": 1264,
+      "m": 85,
+      "p": "健身"
+    },
+    {
+      "d": "2026-10-06",
+      "s": 1265,
+      "e": 1325,
+      "m": 60,
+      "p": "创业"
+    },
+    {
+      "d": "2026-10-07",
+      "s": 480,
+      "e": 568,
+      "m": 88,
+      "p": "创业"
+    },
+    {
+      "d": "2026-10-07",
+      "s": 577,
+      "e": 586,
+      "m": 8,
+      "p": "日语学习"
     }
   ],
   "projectColors": {
@@ -870,8 +908,9 @@ export const focusStats: FocusStats = {
     "博客运营": "#de8dd6",
     "吉他": "#60a5fa",
     "学英语": "#eac758",
+    "日语学习": "#fcc683",
     "科研": "#f68897",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-06T20:04:03.765Z"
+  "updatedAt": "2026-10-07T08:45:43.944Z"
 };
