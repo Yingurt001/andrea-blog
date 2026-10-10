@@ -501,6 +501,13 @@ const diaryData: DiaryItem[] = [
 		date: "2026-10-01T22:00:42Z",
 		mood: "😊",
 	},
+	{
+		id: 62,
+		content:
+			"Today I arrived at the MaxWell Centre, thrilled and comfortable. People are nice here!",
+		date: "2026-10-05T07:46:31Z",
+		mood: "😊",
+	},
 ];
 
 // 获取日记列表（按时间倒序）
