@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 10206,
-  "totalSessions": 106,
-  "activeDays": 26,
+  "totalMinutes": 10315,
+  "totalSessions": 109,
+  "activeDays": 27,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -54,7 +54,8 @@ export const focusStats: FocusStats = {
     "2026-10-02": 162,
     "2026-10-04": 320,
     "2026-10-06": 145,
-    "2026-10-07": 589
+    "2026-10-07": 589,
+    "2026-10-11": 109
   },
   "dayProjects": {
     "2026-09-04": {
@@ -183,6 +184,11 @@ export const focusStats: FocusStats = {
       "吉他": 34,
       "学英语": 19,
       "日语学习": 8
+    },
+    "2026-10-11": {
+      "GyroBN": 50,
+      "做饭": 36,
+      "阅读": 23
     }
   },
   "segments": [
@@ -927,6 +933,27 @@ export const focusStats: FocusStats = {
       "e": 1247,
       "m": 380,
       "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-11",
+      "s": 990,
+      "e": 1040,
+      "m": 50,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-11",
+      "s": 1046,
+      "e": 1069,
+      "m": 23,
+      "p": "阅读"
+    },
+    {
+      "d": "2026-10-11",
+      "s": 1069,
+      "e": 1105,
+      "m": 36,
+      "p": "做饭"
     }
   ],
   "projectColors": {
@@ -934,6 +961,7 @@ export const focusStats: FocusStats = {
     "Cmabridge课程学习": "#ec4899",
     "GyroBN": "#b09ef9",
     "Vibe Coding": "#b1db78",
+    "做饭": "#34d399",
     "健身": "#47c897",
     "其他": "#b6c0c3",
     "创业": "#32c4cb",
@@ -944,5 +972,5 @@ export const focusStats: FocusStats = {
     "科研": "#f68897",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-07T19:47:21.295Z"
+  "updatedAt": "2026-10-11T17:25:32.145Z"
 };
