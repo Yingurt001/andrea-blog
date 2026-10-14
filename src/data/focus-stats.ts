@@ -1052,5 +1052,5 @@ export const focusStats: FocusStats = {
     "追番": "#fbbf24",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-13T23:55:35.415Z"
+  "updatedAt": "2026-10-14T09:07:46.293Z"
 };
