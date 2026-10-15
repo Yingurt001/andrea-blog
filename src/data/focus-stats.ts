@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 10947,
-  "totalSessions": 117,
-  "activeDays": 30,
+  "totalMinutes": 12095,
+  "totalSessions": 124,
+  "activeDays": 31,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -58,7 +58,8 @@ export const focusStats: FocusStats = {
     "2026-10-11": 143,
     "2026-10-12": 300,
     "2026-10-13": 243,
-    "2026-10-14": 55
+    "2026-10-14": 520,
+    "2026-10-15": 683
   },
   "dayProjects": {
     "2026-09-04": {
@@ -204,7 +205,13 @@ export const focusStats: FocusStats = {
       "GyroBN": 243
     },
     "2026-10-14": {
-      "GyroBN": 55
+      "GyroBN": 385,
+      "Cmabridge课程学习": 135
+    },
+    "2026-10-15": {
+      "GyroBN": 555,
+      "健身": 82,
+      "Cmabridge课程学习": 46
     }
   },
   "segments": [
@@ -1033,6 +1040,62 @@ export const focusStats: FocusStats = {
       "e": 56,
       "m": 55,
       "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-14",
+      "s": 608,
+      "e": 667,
+      "m": 59,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-14",
+      "s": 667,
+      "e": 802,
+      "m": 135,
+      "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-10-14",
+      "s": 844,
+      "e": 959,
+      "m": 116,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-14",
+      "s": 1285,
+      "e": 1440,
+      "m": 155,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 0,
+      "e": 505,
+      "m": 505,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 602,
+      "e": 684,
+      "m": 82,
+      "p": "健身"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 684,
+      "e": 734,
+      "m": 50,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 886,
+      "e": 933,
+      "m": 46,
+      "p": "Cmabridge课程学习"
     }
   ],
   "projectColors": {
@@ -1052,5 +1115,5 @@ export const focusStats: FocusStats = {
     "追番": "#fbbf24",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-14T09:07:46.293Z"
+  "updatedAt": "2026-10-15T15:49:19.361Z"
 };
