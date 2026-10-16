@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 12095,
-  "totalSessions": 124,
-  "activeDays": 31,
+  "totalMinutes": 13244,
+  "totalSessions": 130,
+  "activeDays": 32,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -59,7 +59,8 @@ export const focusStats: FocusStats = {
     "2026-10-12": 300,
     "2026-10-13": 243,
     "2026-10-14": 520,
-    "2026-10-15": 683
+    "2026-10-15": 1043,
+    "2026-10-16": 789
   },
   "dayProjects": {
     "2026-09-04": {
@@ -209,9 +210,14 @@ export const focusStats: FocusStats = {
       "Cmabridge课程学习": 135
     },
     "2026-10-15": {
-      "GyroBN": 555,
+      "GyroBN": 748,
       "健身": 82,
-      "Cmabridge课程学习": 46
+      "创业": 75,
+      "做饭": 75,
+      "Cmabridge课程学习": 63
+    },
+    "2026-10-16": {
+      "GyroBN": 789
     }
   },
   "segments": [
@@ -1096,6 +1102,55 @@ export const focusStats: FocusStats = {
       "e": 933,
       "m": 46,
       "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 1000,
+      "e": 1075,
+      "m": 75,
+      "p": "创业"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 1081,
+      "e": 1156,
+      "m": 75,
+      "p": "做饭"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 1200,
+      "e": 1208,
+      "m": 8,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 1208,
+      "e": 1225,
+      "m": 17,
+      "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-10-15",
+      "s": 1255,
+      "e": 1440,
+      "m": 185,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-16",
+      "s": 0,
+      "e": 659,
+      "m": 659,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-16",
+      "s": 668,
+      "e": 798,
+      "m": 130,
+      "p": "GyroBN"
     }
   ],
   "projectColors": {
@@ -1115,5 +1170,5 @@ export const focusStats: FocusStats = {
     "追番": "#fbbf24",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-15T15:49:19.361Z"
+  "updatedAt": "2026-10-16T14:41:24.937Z"
 };
