@@ -25,8 +25,8 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 13244,
-  "totalSessions": 130,
+  "totalMinutes": 13513,
+  "totalSessions": 132,
   "activeDays": 32,
   "days": {
     "2026-09-04": 156,
@@ -60,7 +60,7 @@ export const focusStats: FocusStats = {
     "2026-10-13": 243,
     "2026-10-14": 520,
     "2026-10-15": 1043,
-    "2026-10-16": 789
+    "2026-10-16": 1058
   },
   "dayProjects": {
     "2026-09-04": {
@@ -217,7 +217,8 @@ export const focusStats: FocusStats = {
       "Cmabridge课程学习": 63
     },
     "2026-10-16": {
-      "GyroBN": 789
+      "GyroBN": 911,
+      "健身": 147
     }
   },
   "segments": [
@@ -1151,6 +1152,20 @@ export const focusStats: FocusStats = {
       "e": 798,
       "m": 130,
       "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-16",
+      "s": 858,
+      "e": 981,
+      "m": 122,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-10-16",
+      "s": 981,
+      "e": 1128,
+      "m": 147,
+      "p": "健身"
     }
   ],
   "projectColors": {
@@ -1170,5 +1185,5 @@ export const focusStats: FocusStats = {
     "追番": "#fbbf24",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-10-16T14:41:24.937Z"
+  "updatedAt": "2026-10-17T05:38:32.314Z"
 };
