@@ -25,9 +25,9 @@ export interface FocusStats {
 }
 
 export const focusStats: FocusStats = {
-  "totalMinutes": 18356,
-  "totalSessions": 196,
-  "activeDays": 46,
+  "totalMinutes": 18830,
+  "totalSessions": 204,
+  "activeDays": 47,
   "days": {
     "2026-09-04": 156,
     "2026-09-05": 522,
@@ -74,7 +74,8 @@ export const focusStats: FocusStats = {
     "2026-10-28": 67,
     "2026-10-29": 421,
     "2026-11-02": 687,
-    "2026-11-03": 11
+    "2026-11-03": 396,
+    "2026-11-05": 89
   },
   "dayProjects": {
     "2026-09-04": {
@@ -307,7 +308,14 @@ export const focusStats: FocusStats = {
       "健身": 92
     },
     "2026-11-03": {
-      "Cmabridge课程学习": 11
+      "GyroBN": 203,
+      "Cmabridge课程学习": 114,
+      "健身": 79
+    },
+    "2026-11-05": {
+      "个人提升": 61,
+      "Cmabridge课程学习": 18,
+      "Agent 课程学习": 10
     }
   },
   "segments": [
@@ -1731,6 +1739,62 @@ export const focusStats: FocusStats = {
       "e": 11,
       "m": 11,
       "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-11-03",
+      "s": 577,
+      "e": 631,
+      "m": 54,
+      "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-11-03",
+      "s": 638,
+      "e": 819,
+      "m": 181,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-11-03",
+      "s": 907,
+      "e": 929,
+      "m": 22,
+      "p": "GyroBN"
+    },
+    {
+      "d": "2026-11-03",
+      "s": 967,
+      "e": 1046,
+      "m": 79,
+      "p": "健身"
+    },
+    {
+      "d": "2026-11-03",
+      "s": 1326,
+      "e": 1375,
+      "m": 49,
+      "p": "Cmabridge课程学习"
+    },
+    {
+      "d": "2026-11-05",
+      "s": 865,
+      "e": 926,
+      "m": 61,
+      "p": "个人提升"
+    },
+    {
+      "d": "2026-11-05",
+      "s": 939,
+      "e": 949,
+      "m": 10,
+      "p": "Agent 课程学习"
+    },
+    {
+      "d": "2026-11-05",
+      "s": 1303,
+      "e": 1321,
+      "m": 18,
+      "p": "Cmabridge课程学习"
     }
   ],
   "projectColors": {
@@ -1739,6 +1803,7 @@ export const focusStats: FocusStats = {
     "GyroBN": "#b09ef9",
     "PhD申请": "#f97316",
     "Vibe Coding": "#b1db78",
+    "个人提升": "#f472b6",
     "做饭": "#34d399",
     "健身": "#47c897",
     "其他": "#b6c0c3",
@@ -1752,5 +1817,5 @@ export const focusStats: FocusStats = {
     "追番": "#fbbf24",
     "阅读": "#53b8f9"
   },
-  "updatedAt": "2026-11-03T00:15:27.989Z"
+  "updatedAt": "2026-11-05T22:01:34.609Z"
 };
